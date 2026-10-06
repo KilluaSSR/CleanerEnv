@@ -1,0 +1,12 @@
+[package]
+name = "cleaner-starter"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+
+[[bin]]
+name = "cleaner-starter"
+path = "src/main.rs"
+
+[dependencies]
+libc.workspace = true

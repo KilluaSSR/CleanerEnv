@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Window chrome only; all in-app color comes from the Compose MaterialTheme.colorScheme. -->
+    <style name="Theme.Cleaner" parent="Theme.Material3.DayNight.NoActionBar" />
+</resources>

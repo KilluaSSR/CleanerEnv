@@ -1,0 +1,13 @@
+# App keep rules. Libraries (Hilt, Room, kotlinx.serialization, Compose) ship their own;
+# the root server's entry point is kept by server/consumer-rules.pro.
+
+# Crash stacks stay readable through mapping.txt.
+-keepattributes SourceFile,LineNumberTable
+-renamesourcefileattribute SourceFile
+
+# Stored by Enum.name in DataStore (enumSetting) and in Room columns, so the constant
+# names are persisted data and must never change.
+-keepclassmembernames enum killua.dev.cleaner.data.settings.ThemeMode { <fields>; }
+-keepclassmembernames enum killua.dev.cleaner.domain.model.StorageLocation { <fields>; }
+-keepclassmembernames enum killua.dev.cleaner.domain.model.AppScope { <fields>; }
+-keepclassmembernames enum killua.dev.cleaner.domain.model.WatchKind { <fields>; }

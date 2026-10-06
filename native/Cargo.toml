@@ -1,0 +1,22 @@
+[workspace]
+resolver = "2"
+members = ["cleaner-core", "cleaner-zygisk", "cleaner-starter"]
+
+[workspace.package]
+version = "1.0.0"
+edition = "2021"
+publish = false
+
+[workspace.dependencies]
+libc = "0.2"
+jni-sys = "0.3"
+cleaner-core = { path = "cleaner-core" }
+
+[profile.release]
+opt-level = "s"
+lto = true
+codegen-units = 1
+strip = true
+# Unwinding is kept so every FFI entry point can contain a panic with catch_unwind
+# instead of aborting zygote-forked app processes.
+panic = "unwind"

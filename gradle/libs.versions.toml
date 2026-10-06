@@ -1,0 +1,66 @@
+[versions]
+agp = "9.4.1"
+kotlin = "2.3.21"
+ksp = "2.3.9"
+hilt = "2.60.1"
+arsenal = "0.1.0"
+
+coreKtx = "1.15.0"
+appcompat = "1.7.0"
+material = "1.12.0"
+room = "2.7.1"
+serialization = "1.7.3"
+coroutines = "1.9.0"
+javaxInject = "1"
+
+junit = "4.13.2"
+junitVersion = "1.2.1"
+espressoCore = "3.6.1"
+
+[libraries]
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
+kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
+javax-inject = { group = "javax.inject", name = "javax.inject", version.ref = "javaxInject" }
+
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
+
+androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+
+# Arsenal framework (resolved from the included build via group:name substitution)
+arsenal-core = { group = "dev.killua.arsenal", name = "arsenal-core", version.ref = "arsenal" }
+arsenal-logging = { group = "dev.killua.arsenal", name = "arsenal-logging", version.ref = "arsenal" }
+arsenal-spi = { group = "dev.killua.arsenal", name = "arsenal-spi", version.ref = "arsenal" }
+arsenal-spi-processor = { group = "dev.killua.arsenal", name = "arsenal-spi-processor", version.ref = "arsenal" }
+arsenal-data = { group = "dev.killua.arsenal", name = "arsenal-data", version.ref = "arsenal" }
+arsenal-permission = { group = "dev.killua.arsenal", name = "arsenal-permission", version.ref = "arsenal" }
+arsenal-automation = { group = "dev.killua.arsenal", name = "arsenal-automation", version.ref = "arsenal" }
+arsenal-navigation = { group = "dev.killua.arsenal", name = "arsenal-navigation", version.ref = "arsenal" }
+arsenal-navigation-annotations = { group = "dev.killua.arsenal", name = "arsenal-navigation-annotations", version.ref = "arsenal" }
+arsenal-navigation-processor = { group = "dev.killua.arsenal", name = "arsenal-navigation-processor", version.ref = "arsenal" }
+arsenal-gate-processor = { group = "dev.killua.arsenal", name = "arsenal-gate-processor", version.ref = "arsenal" }
+arsenal-error = { group = "dev.killua.arsenal", name = "arsenal-error", version.ref = "arsenal" }
+arsenal-material = { group = "dev.killua.arsenal", name = "arsenal-material", version.ref = "arsenal" }
+arsenal-notification = { group = "dev.killua.arsenal", name = "arsenal-notification", version.ref = "arsenal" }
+arsenal-update = { group = "dev.killua.arsenal", name = "arsenal-update", version.ref = "arsenal" }
+arsenal-network = { group = "dev.killua.arsenal", name = "arsenal-network", version.ref = "arsenal" }
+
+
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }

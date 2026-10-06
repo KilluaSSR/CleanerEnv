@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Seed for the HCT scheme when wallpaper color is off or unavailable (API < 31). -->
+    <color name="brand_seed">#FF1DA1F2</color>
+</resources>

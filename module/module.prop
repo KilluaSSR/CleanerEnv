@@ -1,0 +1,6 @@
+id=cleaner_isolation
+name=Cleaner Module
+version=v1.0.0
+versionCode=1
+author=KilluaDev.kt
+description=Zygisk storage isolation engine for Cleaner.

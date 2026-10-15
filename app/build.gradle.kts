@@ -73,6 +73,7 @@ dependencies {
     implementation(libs.arsenal.permission)
     implementation(libs.arsenal.update)
     implementation(libs.arsenal.network)
+    implementation(libs.arsenal.utils)
     ksp(libs.arsenal.navigation.processor)
     ksp(libs.arsenal.spi.processor)
     ksp(libs.arsenal.gate.processor)

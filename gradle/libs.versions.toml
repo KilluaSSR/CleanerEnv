@@ -49,6 +49,7 @@ arsenal-material = { group = "dev.killua.arsenal", name = "arsenal-material", ve
 arsenal-notification = { group = "dev.killua.arsenal", name = "arsenal-notification", version.ref = "arsenal" }
 arsenal-update = { group = "dev.killua.arsenal", name = "arsenal-update", version.ref = "arsenal" }
 arsenal-network = { group = "dev.killua.arsenal", name = "arsenal-network", version.ref = "arsenal" }
+arsenal-utils = { group = "dev.killua.arsenal", name = "arsenal-utils", version.ref = "arsenal" }
 
 
 junit = { group = "junit", name = "junit", version.ref = "junit" }

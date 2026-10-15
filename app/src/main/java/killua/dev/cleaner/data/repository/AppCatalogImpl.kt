@@ -8,10 +8,10 @@ import android.content.pm.PackageManager
 import androidx.core.content.pm.PackageInfoCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
 import killua.dev.arsenal.core.di.ApplicationScope
-import killua.dev.arsenal.material.components.application.PackageManagerAppCatalog
-import killua.dev.arsenal.material.components.application.isSystem
-import killua.dev.arsenal.material.components.application.isUserVisibleApp
-import killua.dev.arsenal.material.components.application.queryInstalledPackages
+import killua.dev.arsenal.utils.`package`.PackageManagerAppCatalog
+import killua.dev.arsenal.utils.`package`.isSystem
+import killua.dev.arsenal.utils.`package`.isUserVisibleApp
+import killua.dev.arsenal.utils.`package`.queryInstalledPackages
 import killua.dev.cleaner.di.CurrentUser
 import killua.dev.cleaner.domain.AppCatalog
 import killua.dev.cleaner.domain.RuleRepository

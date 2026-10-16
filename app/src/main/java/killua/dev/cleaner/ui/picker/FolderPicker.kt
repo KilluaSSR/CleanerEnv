@@ -72,8 +72,8 @@ import killua.dev.cleaner.di.CurrentUser
 import killua.dev.cleaner.domain.IsolatedStorageRepository
 import killua.dev.cleaner.ipc.WatchCodec
 import killua.dev.cleaner.ui.components.CleanerSurfaces
-import killua.dev.cleaner.ui.components.EmptyView
-import killua.dev.cleaner.ui.components.LoadingView
+import killua.dev.arsenal.material.templates.basics.EmptyView
+import killua.dev.arsenal.material.templates.basics.LoadingView
 import killua.dev.cleaner.ui.components.ServerRequiredView
 import javax.inject.Inject
 

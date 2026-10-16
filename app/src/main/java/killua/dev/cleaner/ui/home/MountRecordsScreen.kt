@@ -54,9 +54,9 @@ import killua.dev.cleaner.domain.model.MountRecord
 import killua.dev.cleaner.ui.components.AppIcon
 import killua.dev.cleaner.ui.components.CleanerSurfaces
 import killua.dev.cleaner.ui.components.DetailScaffold
-import killua.dev.cleaner.ui.components.EmptyView
+import killua.dev.arsenal.material.templates.basics.EmptyView
 import killua.dev.cleaner.ui.components.GroupHeader
-import killua.dev.cleaner.ui.components.LoadingView
+import killua.dev.arsenal.material.templates.basics.LoadingView
 import killua.dev.cleaner.ui.components.Pill
 import killua.dev.cleaner.ui.components.ServerRequiredView
 import killua.dev.cleaner.ui.components.rememberAppLabel

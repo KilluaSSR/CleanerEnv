@@ -72,15 +72,15 @@ import killua.dev.cleaner.ui.components.AppHeader
 import killua.dev.cleaner.ui.components.AppIcon
 import killua.dev.cleaner.ui.components.CleanerSurfaces
 import killua.dev.cleaner.ui.components.DetailScaffold
-import killua.dev.cleaner.ui.components.EmptyView
-import killua.dev.cleaner.ui.components.LoadingView
+import killua.dev.arsenal.material.templates.basics.EmptyView
+import killua.dev.arsenal.material.templates.basics.LoadingView
 import killua.dev.cleaner.ui.components.Pill
 import killua.dev.cleaner.ui.components.ServerRequiredView
 import killua.dev.cleaner.ui.components.labelRes
 import killua.dev.cleaner.ui.components.rememberAppLabel
 import killua.dev.cleaner.ui.components.rememberFormattedTime
 import killua.dev.cleaner.ui.components.rememberRelativeTime
-import killua.dev.cleaner.ui.components.stateItem
+import killua.dev.arsenal.material.templates.basics.stateItem
 import javax.inject.Inject
 
 data class FileMonitorState(

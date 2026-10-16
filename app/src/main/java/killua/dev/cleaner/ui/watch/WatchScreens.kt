@@ -80,9 +80,9 @@ import killua.dev.cleaner.domain.model.WatchKind
 import killua.dev.cleaner.domain.model.WatchRule
 import killua.dev.cleaner.ui.components.CleanerSurfaces
 import killua.dev.cleaner.ui.components.DetailScaffold
-import killua.dev.cleaner.ui.components.EmptyView
+import killua.dev.arsenal.material.templates.basics.EmptyView
 import killua.dev.cleaner.ui.components.GroupHeader
-import killua.dev.cleaner.ui.components.LoadingView
+import killua.dev.arsenal.material.templates.basics.LoadingView
 import killua.dev.cleaner.ui.components.RowGroup
 import killua.dev.cleaner.ui.components.RowSlot
 import killua.dev.cleaner.ui.components.ServerRequiredView

@@ -30,14 +30,15 @@ import killua.dev.arsenal.core.state.DataState
 import killua.dev.arsenal.material.Spacing
 import killua.dev.arsenal.material.components.application.AppFilterChip
 import killua.dev.arsenal.material.components.application.AppFilterChipsRow
-import killua.dev.arsenal.material.components.application.AppSearchField
+import killua.dev.arsenal.material.components.application.ArsenalSearchBar
+import killua.dev.arsenal.material.components.application.SearchExpansionMode
 import killua.dev.arsenal.material.components.application.appListItems
+import killua.dev.arsenal.material.templates.basics.EmptyView
+import killua.dev.arsenal.material.templates.basics.LoadingView
 import killua.dev.cleaner.R
 import killua.dev.cleaner.domain.model.AppEntry
 import killua.dev.cleaner.domain.model.AppFilter
 import killua.dev.cleaner.domain.model.AppScope
-import killua.dev.cleaner.ui.components.EmptyView
-import killua.dev.cleaner.ui.components.LoadingView
 import killua.dev.cleaner.ui.components.Pill
 import killua.dev.cleaner.ui.components.TabScaffold
 
@@ -51,9 +52,10 @@ fun RulesTab() {
         actions = { FilterMenu(state.filter, viewModel::dispatch) },
     ) { padding ->
         Column(Modifier.fillMaxSize().padding(top = padding.calculateTopPadding())) {
-            AppSearchField(
+            ArsenalSearchBar(
                 query = state.filter.query,
                 onQueryChange = { viewModel.dispatch(RulesIntent.Search(it)) },
+                expansionMode = SearchExpansionMode.Inline,
                 placeholder = stringResource(R.string.rules_search_hint),
                 clearContentDescription = stringResource(R.string.action_clear_search),
             )

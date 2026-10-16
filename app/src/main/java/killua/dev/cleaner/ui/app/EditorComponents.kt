@@ -41,9 +41,9 @@ import killua.dev.cleaner.R
 import killua.dev.cleaner.ui.components.AppDetailScaffold
 import killua.dev.cleaner.ui.components.AppHeader
 import killua.dev.cleaner.ui.components.CleanerSurfaces
-import killua.dev.cleaner.ui.components.EmptyView
+import killua.dev.arsenal.material.templates.basics.EmptyView
 import killua.dev.cleaner.ui.components.Pill
-import killua.dev.cleaner.ui.components.stateItem
+import killua.dev.arsenal.material.templates.basics.stateItem
 
 data class EditorItem(val key: String, val title: String, val subtitle: String? = null)
 

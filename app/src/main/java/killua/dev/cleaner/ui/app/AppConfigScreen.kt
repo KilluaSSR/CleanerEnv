@@ -3,7 +3,6 @@ package killua.dev.cleaner.ui.app
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,7 +34,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -44,7 +42,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.pluralStringResource
@@ -55,6 +52,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavBackStackEntry
 import killua.dev.arsenal.core.mvvm.CollectEffect
 import killua.dev.arsenal.material.Spacing
+import killua.dev.arsenal.material.components.Highlight
+import killua.dev.arsenal.material.components.HighlightTone
 import killua.dev.arsenal.material.templates.scaffolds.plus
 import killua.dev.arsenal.material.templates.settings.SettingsAccent
 import killua.dev.arsenal.material.templates.settings.SettingsItem
@@ -197,36 +196,37 @@ private fun StorageAccess.advice(): Advice = when (this) {
     StorageAccess.AllFiles -> Advice.Strong
 }
 
-private data class AdviceVisual(val icon: ImageVector, val title: Int, val container: Color, val content: Color)
+private fun Advice.tone(): HighlightTone = when (this) {
+    Advice.NotNeeded -> HighlightTone.Neutral
+    Advice.Optional -> HighlightTone.Info
+    Advice.Recommended -> HighlightTone.Suggestion
+    Advice.Strong -> HighlightTone.Warning
+}
 
-@Composable
-private fun Advice.visual(): AdviceVisual {
-    val scheme = MaterialTheme.colorScheme
-    return when (this) {
-        Advice.NotNeeded -> AdviceVisual(Icons.Rounded.CheckCircle, R.string.recommend_title_not_needed, scheme.surfaceContainerHighest, scheme.onSurfaceVariant)
-        Advice.Optional -> AdviceVisual(Icons.Rounded.TipsAndUpdates, R.string.recommend_title_optional, scheme.secondaryContainer, scheme.onSecondaryContainer)
-        Advice.Recommended -> AdviceVisual(Icons.Rounded.Lightbulb, R.string.recommend_title_recommended, scheme.tertiaryContainer, scheme.onTertiaryContainer)
-        Advice.Strong -> AdviceVisual(Icons.Rounded.GppMaybe, R.string.recommend_title_strong, scheme.errorContainer, scheme.onErrorContainer)
-    }
+private fun Advice.icon(): ImageVector = when (this) {
+    Advice.NotNeeded -> Icons.Rounded.CheckCircle
+    Advice.Optional -> Icons.Rounded.TipsAndUpdates
+    Advice.Recommended -> Icons.Rounded.Lightbulb
+    Advice.Strong -> Icons.Rounded.GppMaybe
+}
+
+private fun Advice.titleRes(): Int = when (this) {
+    Advice.NotNeeded -> R.string.recommend_title_not_needed
+    Advice.Optional -> R.string.recommend_title_optional
+    Advice.Recommended -> R.string.recommend_title_recommended
+    Advice.Strong -> R.string.recommend_title_strong
 }
 
 @Composable
 private fun RecommendationCard(access: StorageAccess) {
-    val visual = access.advice().visual()
-    val container by animateColorAsState(visual.container, label = "adviceContainer")
-    val content by animateColorAsState(visual.content, label = "adviceContent")
-    Surface(shape = MaterialTheme.shapes.large, color = container, contentColor = content) {
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(Spacing.md),
-            horizontalArrangement = Arrangement.spacedBy(Spacing.md),
-        ) {
-            Icon(visual.icon, contentDescription = null)
-            Column(verticalArrangement = Arrangement.spacedBy(Spacing.xs)) {
-                Text(stringResource(visual.title), style = MaterialTheme.typography.titleSmall)
-                Text(stringResource(access.recommendationRes()), style = MaterialTheme.typography.bodyMedium)
-            }
-        }
-    }
+    val advice = access.advice()
+    Highlight(
+        tone = advice.tone(),
+        icon = advice.icon(),
+        title = stringResource(advice.titleRes()),
+        text = stringResource(access.recommendationRes()),
+        modifier = Modifier.fillMaxWidth(),
+    )
 }
 
 @Composable

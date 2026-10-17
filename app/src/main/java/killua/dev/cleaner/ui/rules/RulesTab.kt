@@ -10,9 +10,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Apps
 import androidx.compose.material.icons.rounded.FilterList
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -23,9 +20,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.LayoutCoordinates
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import killua.dev.arsenal.core.overlay.SimpleMenuItem
+import killua.dev.arsenal.core.overlay.SimpleMenuMode
 import killua.dev.arsenal.core.state.DataState
 import killua.dev.arsenal.material.Spacing
 import killua.dev.arsenal.material.components.application.AppFilterChip
@@ -33,6 +34,7 @@ import killua.dev.arsenal.material.components.application.AppFilterChipsRow
 import killua.dev.arsenal.material.components.application.ArsenalSearchBar
 import killua.dev.arsenal.material.components.application.SearchExpansionMode
 import killua.dev.arsenal.material.components.application.appListItems
+import killua.dev.arsenal.material.components.menu.rememberSimpleMenuLauncher
 import killua.dev.arsenal.material.templates.basics.EmptyView
 import killua.dev.arsenal.material.templates.basics.LoadingView
 import killua.dev.cleaner.R
@@ -87,25 +89,43 @@ private fun scopeChips(scope: AppScope, onSelect: (AppScope) -> Unit): List<AppF
     ),
 )
 
+private const val FILTER_SHOW_DISABLED_ID = "show_disabled"
+private const val FILTER_ONLY_STORAGE_ID = "only_storage"
+
 @Composable
 private fun FilterMenu(filter: AppFilter, onIntent: (RulesIntent) -> Unit) {
-    var expanded by remember { mutableStateOf(false) }
-    Box {
-        IconButton(onClick = { expanded = true }) {
-            Icon(Icons.Rounded.FilterList, contentDescription = stringResource(R.string.action_filter))
-        }
-        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-            DropdownMenuItem(
-                text = { Text(stringResource(R.string.rules_show_disabled)) },
-                trailingIcon = { Checkbox(checked = filter.showDisabled, onCheckedChange = null) },
-                onClick = { onIntent(RulesIntent.SetShowDisabled(!filter.showDisabled)) },
-            )
-            DropdownMenuItem(
-                text = { Text(stringResource(R.string.rules_only_storage)) },
-                trailingIcon = { Checkbox(checked = filter.onlyStorageApps, onCheckedChange = null) },
-                onClick = { onIntent(RulesIntent.SetOnlyStorage(!filter.onlyStorageApps)) },
-            )
-        }
+    val launcher = rememberSimpleMenuLauncher()
+    var anchor by remember { mutableStateOf<LayoutCoordinates?>(null) }
+    val showDisabledLabel = stringResource(R.string.rules_show_disabled)
+    val onlyStorageLabel = stringResource(R.string.rules_only_storage)
+    IconButton(
+        onClick = {
+            anchor?.let { coordinates ->
+                launcher.show(
+                    items = listOf(
+                        SimpleMenuItem(
+                            id = FILTER_SHOW_DISABLED_ID,
+                            label = showDisabledLabel,
+                            selected = filter.showDisabled,
+                        ),
+                        SimpleMenuItem(
+                            id = FILTER_ONLY_STORAGE_ID,
+                            label = onlyStorageLabel,
+                            selected = filter.onlyStorageApps,
+                        ),
+                    ),
+                    anchor = coordinates,
+                    mode = SimpleMenuMode.Multiple,
+                    onSelectionChange = { ids ->
+                        onIntent(RulesIntent.SetShowDisabled(FILTER_SHOW_DISABLED_ID in ids))
+                        onIntent(RulesIntent.SetOnlyStorage(FILTER_ONLY_STORAGE_ID in ids))
+                    },
+                )
+            }
+        },
+        modifier = Modifier.onGloballyPositioned { anchor = it },
+    ) {
+        Icon(Icons.Rounded.FilterList, contentDescription = stringResource(R.string.action_filter))
     }
 }
 

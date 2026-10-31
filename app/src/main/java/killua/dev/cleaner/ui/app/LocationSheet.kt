@@ -18,7 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
-import killua.dev.arsenal.material.Spacing
+import killua.dev.arsenal.material.ArsenalTokens
 import killua.dev.cleaner.R
 import killua.dev.cleaner.domain.model.StorageLocation
 import killua.dev.cleaner.ui.components.descriptionRes
@@ -34,11 +34,11 @@ fun LocationSheet(
     onDismiss: () -> Unit,
 ) {
     ModalBottomSheet(onDismissRequest = onDismiss) {
-        Column(Modifier.navigationBarsPadding().padding(bottom = Spacing.md).selectableGroup()) {
+        Column(Modifier.navigationBarsPadding().padding(bottom = ArsenalTokens.spacing.md).selectableGroup()) {
             Text(
                 text = stringResource(R.string.location_sheet_title),
                 style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier.padding(horizontal = Spacing.lg, vertical = Spacing.sm),
+                modifier = Modifier.padding(horizontal = ArsenalTokens.spacing.lg, vertical = ArsenalTokens.spacing.sm),
             )
             LocationOption(
                 title = locationLabel(null, default),
@@ -64,9 +64,9 @@ private fun LocationOption(title: String, description: String, selected: Boolean
         modifier = Modifier
             .fillMaxWidth()
             .selectable(selected = selected, onClick = onClick, role = Role.RadioButton)
-            .padding(horizontal = Spacing.lg, vertical = Spacing.md),
+            .padding(horizontal = ArsenalTokens.spacing.lg, vertical = ArsenalTokens.spacing.md),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(Spacing.md),
+        horizontalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.md),
     ) {
         RadioButton(selected = selected, onClick = null)
         Column {

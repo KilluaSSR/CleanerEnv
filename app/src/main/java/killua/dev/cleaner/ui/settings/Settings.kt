@@ -21,10 +21,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 import killua.dev.arsenal.core.di.ApplicationScope
 import killua.dev.arsenal.core.gate.Gate
 import killua.dev.arsenal.data.settings.SettingsStore
-import killua.dev.arsenal.material.Spacing
+import killua.dev.arsenal.material.ArsenalTokens
+import killua.dev.arsenal.material.templates.scaffolds.ArsenalTabScaffold
 import killua.dev.arsenal.material.templates.scaffolds.plus
 import killua.dev.arsenal.material.templates.settings.ArsenalSettingsScreen
 import killua.dev.arsenal.material.templates.settings.SettingsAccent
@@ -39,14 +41,11 @@ import killua.dev.cleaner.data.settings.AppSettings
 import killua.dev.cleaner.data.settings.ThemeMode
 import killua.dev.cleaner.domain.IsolationController
 import killua.dev.cleaner.domain.model.StorageLocation
-import killua.dev.cleaner.ui.components.CleanerSurfaces
-import killua.dev.cleaner.ui.components.TabScaffold
 import killua.dev.cleaner.ui.components.labelRes
 import killua.dev.cleaner.ui.home.ModuleInstaller
 import killua.dev.cleaner.utils.openUrl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 private const val SCREEN = "settings"
 private const val GITHUB_REPO_URL = "https://github.com/KilluaSSR/Cleaner"
@@ -57,12 +56,12 @@ class SettingsViewModel @Inject constructor(val store: SettingsStore) : ViewMode
 @Composable
 fun SettingsTab() {
     val viewModel: SettingsViewModel = hiltViewModel()
-    TabScaffold(title = stringResource(R.string.settings_title)) { padding ->
+    ArsenalTabScaffold(title = stringResource(R.string.settings_title)) { padding ->
         ArsenalSettingsScreen(
             screen = SCREEN,
             store = viewModel.store,
-            contentPadding = padding + PaddingValues(start = Spacing.md, end = Spacing.md, bottom = Spacing.lg),
-            itemContainerColor = CleanerSurfaces.row,
+            contentPadding = padding + PaddingValues(start = ArsenalTokens.spacing.md, end = ArsenalTokens.spacing.md, bottom = ArsenalTokens.spacing.lg),
+            itemContainerColor = ArsenalTokens.colors.surfaceBright,
         )
     }
 }

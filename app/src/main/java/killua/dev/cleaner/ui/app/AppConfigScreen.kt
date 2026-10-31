@@ -53,10 +53,13 @@ import androidx.navigation.NavBackStackEntry
 import killua.dev.arsenal.core.mvvm.CollectEffect
 import killua.dev.arsenal.core.overlay.SimpleMenuItem
 import killua.dev.arsenal.core.overlay.SimpleMenuMode
-import killua.dev.arsenal.material.Spacing
+import killua.dev.arsenal.material.ArsenalTokens
 import killua.dev.arsenal.material.components.Highlight
 import killua.dev.arsenal.material.components.HighlightTone
 import killua.dev.arsenal.material.components.menu.rememberSimpleMenuLauncher
+import killua.dev.arsenal.material.templates.basics.ArsenalRowGroup
+import killua.dev.arsenal.material.templates.basics.ArsenalRowSlot
+import killua.dev.arsenal.material.templates.scaffolds.ArsenalAppDetailScaffold
 import killua.dev.arsenal.material.templates.scaffolds.plus
 import killua.dev.arsenal.material.templates.settings.SettingsAccent
 import killua.dev.arsenal.material.templates.settings.SettingsItem
@@ -66,11 +69,8 @@ import killua.dev.cleaner.R
 import killua.dev.cleaner.domain.model.AppEntry
 import killua.dev.cleaner.domain.model.AppRule
 import killua.dev.cleaner.domain.model.StorageAccess
-import killua.dev.cleaner.ui.components.AppDetailScaffold
 import killua.dev.cleaner.ui.components.AppHeader
 import killua.dev.cleaner.ui.components.Pill
-import killua.dev.cleaner.ui.components.RowGroup
-import killua.dev.cleaner.ui.components.RowSlot
 import killua.dev.cleaner.ui.components.labelRes
 import killua.dev.cleaner.ui.components.locationLabel
 import killua.dev.cleaner.ui.components.recommendationRes
@@ -95,15 +95,15 @@ fun AppConfigScreen(backStackEntry: NavBackStackEntry) {
         }
     }
 
-    AppDetailScaffold(
+    ArsenalAppDetailScaffold(backContentDescription = stringResource(R.string.action_back), 
         onBack = { viewModel.dispatch(AppRuleIntent.Back) },
         actions = { OverflowMenu(onIntent = viewModel::dispatch) },
     ) { padding ->
         LazyColumn(
             state = listState,
             modifier = Modifier.fillMaxSize(),
-            contentPadding = padding + PaddingValues(start = Spacing.md, end = Spacing.md, bottom = FAB_CLEARANCE),
-            verticalArrangement = Arrangement.spacedBy(Spacing.md),
+            contentPadding = padding + PaddingValues(start = ArsenalTokens.spacing.md, end = ArsenalTokens.spacing.md, bottom = FAB_CLEARANCE),
+            verticalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.md),
         ) {
             item(key = "header") { ConfigHeader(state.app, state.packageName) }
             item(key = "enable") {
@@ -169,7 +169,7 @@ private fun ConfigHeader(app: AppEntry?, packageName: String) {
             )
             Pill(
                 text = stringResource(R.string.config_api_badge, app.targetSdk, stringResource(app.storageAccess.labelRes())),
-                modifier = Modifier.padding(top = Spacing.xs),
+                modifier = Modifier.padding(top = ArsenalTokens.spacing.xs),
             )
         }
     }
@@ -177,7 +177,7 @@ private fun ConfigHeader(app: AppEntry?, packageName: String) {
 
 @Composable
 private fun EnableRow(enabled: Boolean, onChange: (Boolean) -> Unit) {
-    RowGroup(
+    ArsenalRowGroup(
         rows = listOf { slot ->
             SettingsSwitch(
                 title = stringResource(R.string.config_enable_isolation),
@@ -251,7 +251,7 @@ private fun folderSummary(rule: AppRule): String {
 private fun RuleRows(state: AppRuleState, onIntent: (AppRuleIntent) -> Unit, onPickLocation: () -> Unit) {
     val rule = state.rule
     val enabled = rule.enabled
-    RowGroup(
+    ArsenalRowGroup(
         rows = listOf(
             { slot ->
                 NavigationRow(
@@ -326,7 +326,7 @@ private fun ViewerRows(enabled: Boolean, onIntent: (AppRuleIntent) -> Unit) {
         Viewer(R.string.config_view_history, Icons.Rounded.History, SettingsAccent.Secondary, AppPage.History),
         Viewer(R.string.config_folder_analysis, Icons.Rounded.DataUsage, SettingsAccent.Tertiary, AppPage.Analysis),
     ).map { viewer ->
-        @Composable { slot: RowSlot ->
+        @Composable { slot: ArsenalRowSlot ->
             NavigationRow(
                 slot = slot,
                 title = stringResource(viewer.title),
@@ -337,12 +337,12 @@ private fun ViewerRows(enabled: Boolean, onIntent: (AppRuleIntent) -> Unit) {
             )
         }
     }
-    RowGroup(rows = rows)
+    ArsenalRowGroup(rows = rows)
 }
 
 @Composable
 private fun NavigationRow(
-    slot: RowSlot,
+    slot: ArsenalRowSlot,
     title: String,
     icon: ImageVector,
     accent: SettingsAccent,

@@ -66,7 +66,13 @@ import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavBackStackEntry
 import killua.dev.arsenal.core.state.DataState
-import killua.dev.arsenal.material.Spacing
+import killua.dev.arsenal.material.ArsenalTokens
+import killua.dev.arsenal.material.templates.basics.ArsenalGroupHeader
+import killua.dev.arsenal.material.templates.basics.ArsenalRowGroup
+import killua.dev.arsenal.material.templates.basics.ArsenalRowSlot
+import killua.dev.arsenal.material.templates.basics.EmptyView
+import killua.dev.arsenal.material.templates.basics.LoadingView
+import killua.dev.arsenal.material.templates.scaffolds.ArsenalDetailScaffold
 import killua.dev.arsenal.material.templates.scaffolds.plus
 import killua.dev.arsenal.material.templates.settings.SettingsAccent
 import killua.dev.arsenal.material.templates.settings.SettingsItem
@@ -78,13 +84,6 @@ import killua.dev.cleaner.R
 import killua.dev.cleaner.domain.model.WatchHit
 import killua.dev.cleaner.domain.model.WatchKind
 import killua.dev.cleaner.domain.model.WatchRule
-import killua.dev.cleaner.ui.components.CleanerSurfaces
-import killua.dev.cleaner.ui.components.DetailScaffold
-import killua.dev.arsenal.material.templates.basics.EmptyView
-import killua.dev.cleaner.ui.components.GroupHeader
-import killua.dev.arsenal.material.templates.basics.LoadingView
-import killua.dev.cleaner.ui.components.RowGroup
-import killua.dev.cleaner.ui.components.RowSlot
 import killua.dev.cleaner.ui.components.ServerRequiredView
 import killua.dev.cleaner.ui.components.labelRes
 import killua.dev.cleaner.ui.components.rememberFormattedTime
@@ -141,7 +140,7 @@ fun WatchEditorScreen(backStackEntry: NavBackStackEntry) {
     val viewModel: WatchEditorViewModel = hiltViewModel()
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
-    DetailScaffold(
+    ArsenalDetailScaffold(backContentDescription = stringResource(R.string.action_back), 
         title = stringResource(if (state.isNew) R.string.watch_editor_title_new else R.string.watch_editor_title_edit),
         onBack = { viewModel.dispatch(WatchEditorIntent.Back) },
     ) { padding ->
@@ -162,12 +161,12 @@ private fun WatchEditorContent(state: WatchEditorState, onIntent: (WatchEditorIn
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        contentPadding = padding + PaddingValues(start = Spacing.md, end = Spacing.md, top = Spacing.sm, bottom = Spacing.lg),
-        verticalArrangement = Arrangement.spacedBy(Spacing.lg),
+        contentPadding = padding + PaddingValues(start = ArsenalTokens.spacing.md, end = ArsenalTokens.spacing.md, top = ArsenalTokens.spacing.sm, bottom = ArsenalTokens.spacing.lg),
+        verticalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.lg),
     ) {
         item(key = "directory") {
-            Column(verticalArrangement = Arrangement.spacedBy(Spacing.sm)) {
-                GroupHeader(title = stringResource(R.string.watch_section_directory))
+            Column(verticalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.sm)) {
+                ArsenalGroupHeader(title = stringResource(R.string.watch_section_directory))
                 FolderField(
                     path = state.directory,
                     source = FolderSource.SharedStorage,
@@ -179,7 +178,7 @@ private fun WatchEditorContent(state: WatchEditorState, onIntent: (WatchEditorIn
         }
         item(key = "kind") {
             Column {
-                RowGroup(
+                ArsenalRowGroup(
                     title = stringResource(R.string.watch_section_kind),
                     rows = WatchKind.entries.map { kind ->
                         { slot -> KindRow(kind, selected = state.kind == kind, slot) { onIntent(WatchEditorIntent.SetKind(kind)) } }
@@ -196,13 +195,13 @@ private fun WatchEditorContent(state: WatchEditorState, onIntent: (WatchEditorIn
                         label = stringResource(if (namedKind == WatchKind.Folder) R.string.watch_name_folder else R.string.watch_name_file),
                         supporting = stringResource(if (state.nameError) R.string.watch_name_invalid else R.string.watch_name_supporting),
                         isError = state.nameError,
-                        modifier = Modifier.padding(top = Spacing.md),
+                        modifier = Modifier.padding(top = ArsenalTokens.spacing.md),
                     )
                 }
             }
         }
         item(key = "options") {
-            RowGroup(
+            ArsenalRowGroup(
                 title = stringResource(R.string.watch_section_options),
                 rows = listOf(
                     { slot ->
@@ -237,7 +236,7 @@ private fun WatchEditorContent(state: WatchEditorState, onIntent: (WatchEditorIn
                 text = stringResource(R.string.watch_attribution_note),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(horizontal = Spacing.sm),
+                modifier = Modifier.padding(horizontal = ArsenalTokens.spacing.sm),
             )
         }
         item(key = "save") {
@@ -265,7 +264,7 @@ private fun WatchEditorContent(state: WatchEditorState, onIntent: (WatchEditorIn
 }
 
 @Composable
-private fun KindRow(kind: WatchKind, selected: Boolean, slot: RowSlot, onClick: () -> Unit) {
+private fun KindRow(kind: WatchKind, selected: Boolean, slot: ArsenalRowSlot, onClick: () -> Unit) {
     val (title, description) = when (kind) {
         WatchKind.Folder -> R.string.watch_kind_folder to R.string.watch_kind_folder_description
         WatchKind.File -> R.string.watch_kind_file to R.string.watch_kind_file_description
@@ -292,7 +291,7 @@ private fun FormField(
     isError: Boolean,
     modifier: Modifier = Modifier,
 ) {
-    val fill = CleanerSurfaces.row
+    val fill = ArsenalTokens.colors.surfaceBright
     TextField(
         value = value,
         onValueChange = onValueChange,
@@ -319,7 +318,7 @@ fun WatchLogScreen(backStackEntry: NavBackStackEntry) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val rule = state.rule
 
-    DetailScaffold(
+    ArsenalDetailScaffold(backContentDescription = stringResource(R.string.action_back), 
         title = rule?.titleText().orEmpty(),
         subtitle = rule?.directoryText(),
         onBack = { viewModel.dispatch(WatchLogIntent.Back) },
@@ -341,13 +340,13 @@ fun WatchLogScreen(backStackEntry: NavBackStackEntry) {
     ) { padding ->
         if (rule == null) {
             Box(Modifier.padding(padding)) { LoadingView() }
-            return@DetailScaffold
+            return@ArsenalDetailScaffold
         }
         val events = (state.events as? DataState.Success)?.data.orEmpty()
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = padding + PaddingValues(start = Spacing.md, end = Spacing.md, top = Spacing.sm, bottom = Spacing.lg),
-            verticalArrangement = Arrangement.spacedBy(Spacing.xs),
+            contentPadding = padding + PaddingValues(start = ArsenalTokens.spacing.md, end = ArsenalTokens.spacing.md, top = ArsenalTokens.spacing.sm, bottom = ArsenalTokens.spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.xs),
         ) {
             item(key = "enabled") {
                 SettingsSwitch(
@@ -358,7 +357,7 @@ fun WatchLogScreen(backStackEntry: NavBackStackEntry) {
                     checked = rule.enabled,
                     onCheckedChange = { viewModel.dispatch(WatchLogIntent.SetEnabled(it)) },
                     shape = groupedItemShape(itemPosition(0, if (state.pending) 2 else 1)),
-                    containerColor = CleanerSurfaces.row,
+                    containerColor = ArsenalTokens.colors.surfaceBright,
                 )
             }
             if (state.pending) {
@@ -369,11 +368,11 @@ fun WatchLogScreen(backStackEntry: NavBackStackEntry) {
                         leadingIcon = Icons.Rounded.HourglassTop,
                         leadingAccent = SettingsAccent.Tertiary,
                         shape = groupedItemShape(itemPosition(1, 2)),
-                        containerColor = CleanerSurfaces.row,
+                        containerColor = ArsenalTokens.colors.surfaceBright,
                     )
                 }
             }
-            item(key = "gap") { Box(Modifier.padding(top = Spacing.md)) }
+            item(key = "gap") { Box(Modifier.padding(top = ArsenalTokens.spacing.md)) }
             when {
                 !state.daemonOnline -> item(key = "offline") { ServerRequiredView() }
                 state.events is DataState.Loading -> item(key = "loading") { LoadingView() }
@@ -394,13 +393,13 @@ fun WatchLogScreen(backStackEntry: NavBackStackEntry) {
 
 @Composable
 private fun EventRow(event: WatchHit, shape: Shape) {
-    Surface(shape = shape, color = CleanerSurfaces.row, modifier = Modifier.fillMaxWidth()) {
+    Surface(shape = shape, color = ArsenalTokens.colors.surfaceBright, modifier = Modifier.fillMaxWidth()) {
         Row(
             modifier = Modifier
                 .heightIn(min = 64.dp)
-                .padding(horizontal = Spacing.lg, vertical = Spacing.sm),
+                .padding(horizontal = ArsenalTokens.spacing.lg, vertical = ArsenalTokens.spacing.sm),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(Spacing.md),
+            horizontalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.md),
         ) {
             Icon(event.type.icon(), contentDescription = null, tint = MaterialTheme.colorScheme.primary)
             Column(Modifier.weight(1f)) {
@@ -427,7 +426,7 @@ fun WatchRulesScreen(backStackEntry: NavBackStackEntry) {
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { viewModel.dispatch(WatchRulesIntent.Refresh) }
     BackHandler(enabled = state.selecting) { viewModel.dispatch(WatchRulesIntent.ClearSelection) }
 
-    DetailScaffold(
+    ArsenalDetailScaffold(backContentDescription = stringResource(R.string.action_back), 
         title = if (state.selecting) {
             stringResource(R.string.watch_selected_count, state.selected.size)
         } else {
@@ -453,12 +452,12 @@ fun WatchRulesScreen(backStackEntry: NavBackStackEntry) {
                     message = stringResource(R.string.watch_manage_desc),
                 )
             }
-            return@DetailScaffold
+            return@ArsenalDetailScaffold
         }
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = padding + PaddingValues(start = Spacing.md, end = Spacing.md, top = Spacing.sm, bottom = FAB_CLEARANCE),
-            verticalArrangement = Arrangement.spacedBy(Spacing.xs),
+            contentPadding = padding + PaddingValues(start = ArsenalTokens.spacing.md, end = ArsenalTokens.spacing.md, top = ArsenalTokens.spacing.sm, bottom = FAB_CLEARANCE),
+            verticalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.xs),
         ) {
             itemsIndexed(state.rules, key = { _, rule -> rule.id }) { index, rule ->
                 ManagedRuleRow(
@@ -519,7 +518,7 @@ private fun ManagedRuleRow(
     onLongClick: () -> Unit,
 ) {
     val container by animateColorAsState(
-        if (selected) MaterialTheme.colorScheme.secondaryContainer else CleanerSurfaces.row,
+        if (selected) MaterialTheme.colorScheme.secondaryContainer else ArsenalTokens.colors.surfaceBright,
         label = "ruleContainer",
     )
     SettingsItem(

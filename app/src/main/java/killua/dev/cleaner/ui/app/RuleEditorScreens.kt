@@ -22,7 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavBackStackEntry
-import killua.dev.arsenal.material.Spacing
+import killua.dev.arsenal.material.ArsenalTokens
 import killua.dev.arsenal.material.templates.settings.ItemPosition
 import killua.dev.arsenal.material.templates.settings.SettingsAccent
 import killua.dev.arsenal.material.templates.settings.SettingsSwitch
@@ -30,7 +30,6 @@ import killua.dev.arsenal.material.templates.settings.groupedItemShape
 import killua.dev.arsenal.navigation.annotation.NavDestination
 import killua.dev.cleaner.R
 import killua.dev.cleaner.ui.components.AppIcon
-import killua.dev.cleaner.ui.components.CleanerSurfaces
 import killua.dev.cleaner.ui.picker.FolderField
 import killua.dev.cleaner.ui.picker.FolderPickerSheet
 import killua.dev.cleaner.ui.picker.FolderSource
@@ -89,8 +88,8 @@ fun AccessibleFoldersScreen(backStackEntry: NavBackStackEntry) {
                     checked = state.rule.allowGallery,
                     onCheckedChange = { viewModel.dispatch(AppRuleIntent.SetAllowGallery(it)) },
                     shape = groupedItemShape(ItemPosition.Single),
-                    containerColor = CleanerSurfaces.row,
-                    modifier = Modifier.padding(bottom = Spacing.md),
+                    containerColor = ArsenalTokens.colors.surfaceBright,
+                    modifier = Modifier.padding(bottom = ArsenalTokens.spacing.md),
                 )
             }
         },
@@ -180,7 +179,7 @@ fun SharedFoldersScreen(backStackEntry: NavBackStackEntry) {
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun SourceAppChips(state: AppRuleState, selected: String?, onSelect: (String) -> Unit) {
-    FlowRow(horizontalArrangement = Arrangement.spacedBy(Spacing.sm)) {
+    FlowRow(horizontalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.sm)) {
         state.isolatedApps.forEach { app ->
             FilterChip(
                 selected = selected == app.packageName,

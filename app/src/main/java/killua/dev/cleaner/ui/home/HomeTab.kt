@@ -61,8 +61,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import killua.dev.arsenal.material.Spacing
+import killua.dev.arsenal.material.ArsenalTokens
 import killua.dev.arsenal.material.components.loadingindicator.ArsenalLoadingIndicator
+import killua.dev.arsenal.material.templates.basics.ArsenalGroupHeader
+import killua.dev.arsenal.material.templates.basics.ArsenalRowGroup
+import killua.dev.arsenal.material.templates.basics.ArsenalRowSlot
+import killua.dev.arsenal.material.templates.scaffolds.ArsenalTabScaffold
 import killua.dev.arsenal.material.templates.scaffolds.plus
 import killua.dev.arsenal.material.templates.settings.SettingsAccent
 import killua.dev.arsenal.material.templates.settings.SettingsItem
@@ -72,11 +76,7 @@ import killua.dev.cleaner.R
 import killua.dev.cleaner.domain.model.ModuleState
 import killua.dev.cleaner.domain.model.MountRecord
 import killua.dev.cleaner.domain.model.RuntimeState
-import killua.dev.cleaner.ui.components.GroupHeader
 import killua.dev.cleaner.ui.components.Pill
-import killua.dev.cleaner.ui.components.RowGroup
-import killua.dev.cleaner.ui.components.RowSlot
-import killua.dev.cleaner.ui.components.TabScaffold
 import killua.dev.cleaner.ui.components.labelRes
 import killua.dev.cleaner.ui.components.rememberAppLabel
 import killua.dev.cleaner.ui.components.rememberFormattedTime
@@ -89,7 +89,7 @@ fun HomeTab() {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { viewModel.dispatch(HomeIntent.Refresh) }
 
-    TabScaffold(
+    ArsenalTabScaffold(
         title = stringResource(R.string.app_name),
         contentAfterTitle = {
             UpdatePill(
@@ -145,7 +145,7 @@ private fun UpdatePill(
                 exit = fadeOut() + shrinkHorizontally(),
             ) {
                 ArsenalLoadingIndicator(
-                    modifier = Modifier.padding(end = Spacing.xs).size(16.dp),
+                    modifier = Modifier.padding(end = ArsenalTokens.spacing.xs).size(16.dp),
                     color = content,
                 )
             }
@@ -159,12 +159,12 @@ private fun HomeContent(state: HomeState, onIntent: (HomeIntent) -> Unit, conten
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = contentPadding + PaddingValues(
-            start = Spacing.md,
-            end = Spacing.md,
-            top = Spacing.sm,
-            bottom = Spacing.lg,
+            start = ArsenalTokens.spacing.md,
+            end = ArsenalTokens.spacing.md,
+            top = ArsenalTokens.spacing.sm,
+            bottom = ArsenalTokens.spacing.lg,
         ),
-        verticalArrangement = Arrangement.spacedBy(Spacing.sm),
+        verticalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.sm),
     ) {
         item(key = "status") { StatusCard(state.status, state.busy, onIntent) }
         item(key = "service") { ServiceGroup(state.runtime, state.busy, onIntent) }
@@ -208,10 +208,10 @@ private fun StatusCard(status: ModuleStatus, busy: Boolean, onIntent: (HomeInten
         contentColor = content,
     ) {
         Column(
-            modifier = Modifier.padding(Spacing.lg),
-            verticalArrangement = Arrangement.spacedBy(Spacing.sm),
+            modifier = Modifier.padding(ArsenalTokens.spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.sm),
         ) {
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Spacing.md)) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.md)) {
                 Crossfade(targetState = status == ModuleStatus.Checking || busy, label = "statusBusy") { loading ->
                     Box(Modifier.size(40.dp), contentAlignment = Alignment.Center) {
                         if (loading) {
@@ -328,8 +328,8 @@ private fun StatusActions(status: ModuleStatus, busy: Boolean, onIntent: (HomeIn
     }
     AnimatedVisibility(visible = actions.isNotEmpty()) {
         FlowRow(
-            modifier = Modifier.padding(top = Spacing.sm),
-            horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
+            modifier = Modifier.padding(top = ArsenalTokens.spacing.sm),
+            horizontalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.sm),
         ) {
             actions.forEachIndexed { index, (label, intent) ->
                 if (index == 0) {
@@ -345,7 +345,7 @@ private fun StatusActions(status: ModuleStatus, busy: Boolean, onIntent: (HomeIn
 @Composable
 private fun ServiceGroup(runtime: RuntimeState?, busy: Boolean, onIntent: (HomeIntent) -> Unit) {
     val live = runtime as? RuntimeState.Connected
-    val rows = buildList<@Composable (RowSlot) -> Unit> {
+    val rows = buildList<@Composable (ArsenalRowSlot) -> Unit> {
         add { slot ->
             SettingsItem(
                 title = stringResource(if (live != null) R.string.service_running else R.string.service_stopped),
@@ -382,12 +382,12 @@ private fun ServiceGroup(runtime: RuntimeState?, busy: Boolean, onIntent: (HomeI
             }
         }
     }
-    RowGroup(rows = rows, title = stringResource(R.string.home_section_service))
+    ArsenalRowGroup(rows = rows, title = stringResource(R.string.home_section_service))
 }
 
 @Composable
 private fun MonitorGroup(monitorEnabled: Boolean, onIntent: (HomeIntent) -> Unit) {
-    RowGroup(
+    ArsenalRowGroup(
         title = stringResource(R.string.home_section_monitor),
         rows = listOf { slot ->
             SettingsItem(
@@ -410,8 +410,8 @@ private fun WatchGroup(
     onIntent: (HomeIntent) -> Unit,
 ) {
     Column {
-        GroupHeader(title = stringResource(R.string.home_section_watch))
-        val rows: List<@Composable (RowSlot) -> Unit> = listOf { slot ->
+        ArsenalGroupHeader(title = stringResource(R.string.home_section_watch))
+        val rows: List<@Composable (ArsenalRowSlot) -> Unit> = listOf { slot ->
             SettingsItem(
                 title = stringResource(R.string.watch_manage),
                 description = stringResource(R.string.watch_manage_desc),
@@ -423,7 +423,7 @@ private fun WatchGroup(
                 onClick = { onIntent(HomeIntent.ManageWatches) },
             )
         }
-        RowGroup(rows = rows)
+        ArsenalRowGroup(rows = rows)
     }
 }
 
@@ -431,9 +431,9 @@ private fun WatchGroup(
 private fun MountsGroup(mounts: List<MountRecord>, onIntent: (HomeIntent) -> Unit) {
     Column {
         val failures = mounts.count { !it.success }
-        GroupHeader(title = stringResource(R.string.home_section_mounts))
+        ArsenalGroupHeader(title = stringResource(R.string.home_section_mounts))
         val latest = mounts.maxByOrNull { it.occurredAtMs }
-        RowGroup(
+        ArsenalRowGroup(
             rows = listOf { slot ->
                 SettingsItem(
                     title = stringResource(R.string.mounts_title),

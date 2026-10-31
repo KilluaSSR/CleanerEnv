@@ -43,6 +43,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavBackStackEntry
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 import killua.dev.arsenal.core.mvvm.BaseViewModel
 import killua.dev.arsenal.core.mvvm.UiEffect
 import killua.dev.arsenal.core.mvvm.UiIntent
@@ -50,7 +51,12 @@ import killua.dev.arsenal.core.mvvm.UiState
 import killua.dev.arsenal.core.overlay.OverlayController
 import killua.dev.arsenal.core.state.DataState
 import killua.dev.arsenal.data.settings.SettingsStore
-import killua.dev.arsenal.material.Spacing
+import killua.dev.arsenal.material.ArsenalTokens
+import killua.dev.arsenal.material.templates.basics.EmptyView
+import killua.dev.arsenal.material.templates.basics.LoadingView
+import killua.dev.arsenal.material.templates.basics.stateItem
+import killua.dev.arsenal.material.templates.scaffolds.ArsenalAppDetailScaffold
+import killua.dev.arsenal.material.templates.scaffolds.ArsenalDetailScaffold
 import killua.dev.arsenal.material.templates.scaffolds.plus
 import killua.dev.arsenal.material.templates.settings.SettingsAccent
 import killua.dev.arsenal.material.templates.settings.SettingsSwitch
@@ -67,21 +73,14 @@ import killua.dev.cleaner.domain.IsolationController
 import killua.dev.cleaner.domain.model.FileEvent
 import killua.dev.cleaner.domain.model.FileEventType
 import killua.dev.cleaner.ui.app.AppRuleViewModel
-import killua.dev.cleaner.ui.components.AppDetailScaffold
 import killua.dev.cleaner.ui.components.AppHeader
 import killua.dev.cleaner.ui.components.AppIcon
-import killua.dev.cleaner.ui.components.CleanerSurfaces
-import killua.dev.cleaner.ui.components.DetailScaffold
-import killua.dev.arsenal.material.templates.basics.EmptyView
-import killua.dev.arsenal.material.templates.basics.LoadingView
 import killua.dev.cleaner.ui.components.Pill
 import killua.dev.cleaner.ui.components.ServerRequiredView
 import killua.dev.cleaner.ui.components.labelRes
 import killua.dev.cleaner.ui.components.rememberAppLabel
 import killua.dev.cleaner.ui.components.rememberFormattedTime
 import killua.dev.cleaner.ui.components.rememberRelativeTime
-import killua.dev.arsenal.material.templates.basics.stateItem
-import javax.inject.Inject
 
 data class FileMonitorState(
     val daemonOnline: Boolean = false,
@@ -141,7 +140,7 @@ fun FileMonitorScreen(backStackEntry: NavBackStackEntry) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val apps = state.apps
 
-    DetailScaffold(
+    ArsenalDetailScaffold(backContentDescription = stringResource(R.string.action_back), 
         title = stringResource(R.string.history_title_all),
         onBack = { viewModel.dispatch(FileMonitorIntent.Back) },
         actions = {
@@ -154,8 +153,8 @@ fun FileMonitorScreen(backStackEntry: NavBackStackEntry) {
     ) { padding ->
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = padding + PaddingValues(start = Spacing.md, end = Spacing.md, top = Spacing.sm, bottom = Spacing.lg),
-            verticalArrangement = Arrangement.spacedBy(Spacing.xs),
+            contentPadding = padding + PaddingValues(start = ArsenalTokens.spacing.md, end = ArsenalTokens.spacing.md, top = ArsenalTokens.spacing.sm, bottom = ArsenalTokens.spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.xs),
         ) {
             item(key = "monitor") {
                 SettingsSwitch(
@@ -166,10 +165,10 @@ fun FileMonitorScreen(backStackEntry: NavBackStackEntry) {
                     checked = state.monitorEnabled,
                     onCheckedChange = { viewModel.dispatch(FileMonitorIntent.SetMonitor(it)) },
                     shape = MaterialTheme.shapes.large,
-                    containerColor = CleanerSurfaces.row,
+                    containerColor = ArsenalTokens.colors.surfaceBright,
                 )
             }
-            item(key = "gap") { Box(Modifier.padding(top = Spacing.md)) }
+            item(key = "gap") { Box(Modifier.padding(top = ArsenalTokens.spacing.md)) }
             when {
                 !state.daemonOnline -> stateItem { ServerRequiredView(it) }
                 apps is DataState.Success -> itemsIndexed(apps.data, key = { _, event -> event.packageName }) { index, event ->
@@ -203,16 +202,16 @@ fun FileMonitorScreen(backStackEntry: NavBackStackEntry) {
 
 @Composable
 private fun MonitoredAppRow(latest: FileEvent, shape: Shape, modifier: Modifier = Modifier, onClick: () -> Unit) {
-    Surface(onClick = onClick, shape = shape, color = CleanerSurfaces.row, modifier = modifier.fillMaxWidth()) {
+    Surface(onClick = onClick, shape = shape, color = ArsenalTokens.colors.surfaceBright, modifier = modifier.fillMaxWidth()) {
         Row(
             modifier = Modifier
                 .heightIn(min = 72.dp)
-                .padding(horizontal = Spacing.lg, vertical = Spacing.md),
+                .padding(horizontal = ArsenalTokens.spacing.lg, vertical = ArsenalTokens.spacing.md),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(Spacing.md),
+            horizontalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.md),
         ) {
             AppIcon(latest.packageName, size = 40.dp)
-            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(Spacing.extraSmall)) {
+            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.xs)) {
                 Text(rememberAppLabel(latest.packageName), style = MaterialTheme.typography.titleMedium, maxLines = 1)
                 Text(
                     text = stringResource(R.string.history_app_latest, stringResource(latest.type.labelRes()), latest.subPath),
@@ -294,7 +293,7 @@ fun FileHistoryScreen(backStackEntry: NavBackStackEntry) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val events = state.events
 
-    AppDetailScaffold(
+    ArsenalAppDetailScaffold(backContentDescription = stringResource(R.string.action_back), 
         onBack = { viewModel.dispatch(HistoryIntent.Back) },
         actions = {
             if (state.daemonOnline && events is DataState.Success) {
@@ -306,19 +305,19 @@ fun FileHistoryScreen(backStackEntry: NavBackStackEntry) {
     ) { padding ->
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = padding + PaddingValues(start = Spacing.md, end = Spacing.md, bottom = Spacing.lg),
-            verticalArrangement = Arrangement.spacedBy(Spacing.xs),
+            contentPadding = padding + PaddingValues(start = ArsenalTokens.spacing.md, end = ArsenalTokens.spacing.md, bottom = ArsenalTokens.spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.xs),
         ) {
             item(key = "header") {
                 AppHeader(
                     packageName = state.packageName,
                     label = rememberAppLabel(state.packageName),
-                    modifier = Modifier.padding(bottom = Spacing.md),
+                    modifier = Modifier.padding(bottom = ArsenalTokens.spacing.md),
                 ) {
                     if (events is DataState.Success) {
                         Pill(
                             text = stringResource(R.string.history_record_count, events.data.size),
-                            modifier = Modifier.padding(top = Spacing.xs),
+                            modifier = Modifier.padding(top = ArsenalTokens.spacing.xs),
                         )
                     }
                 }
@@ -347,13 +346,13 @@ fun FileHistoryScreen(backStackEntry: NavBackStackEntry) {
 
 @Composable
 private fun EventRow(event: FileEvent, shape: Shape) {
-    Surface(shape = shape, color = CleanerSurfaces.row, modifier = Modifier.fillMaxWidth()) {
+    Surface(shape = shape, color = ArsenalTokens.colors.surfaceBright, modifier = Modifier.fillMaxWidth()) {
         Row(
             modifier = Modifier
                 .heightIn(min = 64.dp)
-                .padding(horizontal = Spacing.lg, vertical = Spacing.sm),
+                .padding(horizontal = ArsenalTokens.spacing.lg, vertical = ArsenalTokens.spacing.sm),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(Spacing.md),
+            horizontalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.md),
         ) {
             Icon(event.type.icon(), contentDescription = null, tint = MaterialTheme.colorScheme.primary)
             Column(Modifier.weight(1f)) {

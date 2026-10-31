@@ -16,12 +16,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
-import killua.dev.arsenal.material.Spacing
+import killua.dev.arsenal.material.ArsenalTokens
+import killua.dev.arsenal.material.templates.scaffolds.ArsenalDetailScaffold
 import killua.dev.arsenal.material.templates.scaffolds.plus
 import killua.dev.arsenal.navigation.annotation.NavDestination
 import killua.dev.cleaner.R
-import killua.dev.cleaner.ui.components.CleanerSurfaces
-import killua.dev.cleaner.ui.components.DetailScaffold
 
 private val sections = listOf(
     R.string.help_how_title to R.string.help_how_body,
@@ -35,17 +34,17 @@ private val sections = listOf(
 @NavDestination(route = "help")
 @Composable
 fun HelpScreen(navController: NavHostController, backStackEntry: NavBackStackEntry) {
-    DetailScaffold(title = stringResource(R.string.help_title), onBack = { navController.navigateUp() }) { padding ->
+    ArsenalDetailScaffold(backContentDescription = stringResource(R.string.action_back), title = stringResource(R.string.help_title), onBack = { navController.navigateUp() }) { padding ->
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = padding + PaddingValues(start = Spacing.md, end = Spacing.md, bottom = Spacing.lg),
-            verticalArrangement = Arrangement.spacedBy(Spacing.sm),
+            contentPadding = padding + PaddingValues(start = ArsenalTokens.spacing.md, end = ArsenalTokens.spacing.md, bottom = ArsenalTokens.spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.sm),
         ) {
             items(sections) { (title, body) ->
-                Surface(shape = MaterialTheme.shapes.large, color = CleanerSurfaces.row) {
+                Surface(shape = MaterialTheme.shapes.large, color = ArsenalTokens.colors.surfaceBright) {
                     Column(
-                        modifier = Modifier.fillMaxWidth().padding(Spacing.lg),
-                        verticalArrangement = Arrangement.spacedBy(Spacing.sm),
+                        modifier = Modifier.fillMaxWidth().padding(ArsenalTokens.spacing.lg),
+                        verticalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.sm),
                     ) {
                         Text(stringResource(title), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
                         Text(stringResource(body), style = MaterialTheme.typography.bodyMedium)

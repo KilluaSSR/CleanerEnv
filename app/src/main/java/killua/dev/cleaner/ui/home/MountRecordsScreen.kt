@@ -35,12 +35,17 @@ import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavBackStackEntry
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import killua.dev.arsenal.core.mvvm.BaseViewModel
 import killua.dev.arsenal.core.mvvm.UiEffect
 import killua.dev.arsenal.core.mvvm.UiIntent
 import killua.dev.arsenal.core.mvvm.UiState
 import killua.dev.arsenal.core.state.DataState
-import killua.dev.arsenal.material.Spacing
+import killua.dev.arsenal.material.ArsenalTokens
+import killua.dev.arsenal.material.templates.basics.ArsenalGroupHeader
+import killua.dev.arsenal.material.templates.basics.EmptyView
+import killua.dev.arsenal.material.templates.basics.LoadingView
+import killua.dev.arsenal.material.templates.scaffolds.ArsenalDetailScaffold
 import killua.dev.arsenal.material.templates.scaffolds.plus
 import killua.dev.arsenal.material.templates.settings.groupedItemShape
 import killua.dev.arsenal.material.templates.settings.itemPosition
@@ -52,17 +57,11 @@ import killua.dev.cleaner.domain.FileHistoryRepository
 import killua.dev.cleaner.domain.IsolationController
 import killua.dev.cleaner.domain.model.MountRecord
 import killua.dev.cleaner.ui.components.AppIcon
-import killua.dev.cleaner.ui.components.CleanerSurfaces
-import killua.dev.cleaner.ui.components.DetailScaffold
-import killua.dev.arsenal.material.templates.basics.EmptyView
-import killua.dev.cleaner.ui.components.GroupHeader
-import killua.dev.arsenal.material.templates.basics.LoadingView
 import killua.dev.cleaner.ui.components.Pill
 import killua.dev.cleaner.ui.components.ServerRequiredView
 import killua.dev.cleaner.ui.components.rememberAppLabel
 import killua.dev.cleaner.ui.components.rememberFormattedTime
 import killua.dev.cleaner.ui.components.rememberRelativeTime
-import javax.inject.Inject
 
 data class MountRecordsState(
     val daemonOnline: Boolean = false,
@@ -117,14 +116,14 @@ fun MountRecordsScreen(backStackEntry: NavBackStackEntry) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { viewModel.dispatch(MountRecordsIntent.Refresh) }
 
-    DetailScaffold(
+    ArsenalDetailScaffold(backContentDescription = stringResource(R.string.action_back), 
         title = stringResource(R.string.home_section_mounts),
         onBack = { viewModel.dispatch(MountRecordsIntent.Back) },
     ) { padding ->
         val records = state.records
         if (state.daemonOnline && records is DataState.Success) {
             MountList(records.data, padding, onOpen = { viewModel.dispatch(MountRecordsIntent.OpenApp(it)) })
-            return@DetailScaffold
+            return@ArsenalDetailScaffold
         }
         Box(Modifier.padding(padding)) {
             when {
@@ -141,11 +140,11 @@ private fun MountList(records: List<MountRecord>, padding: PaddingValues, onOpen
     val failures = records.count { !it.success }
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        contentPadding = padding + PaddingValues(start = Spacing.md, end = Spacing.md, bottom = Spacing.lg),
-        verticalArrangement = Arrangement.spacedBy(Spacing.xs),
+        contentPadding = padding + PaddingValues(start = ArsenalTokens.spacing.md, end = ArsenalTokens.spacing.md, bottom = ArsenalTokens.spacing.lg),
+        verticalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.xs),
     ) {
         item(key = "summary") {
-            GroupHeader(title = stringResource(R.string.mounts_count, records.size)) {
+            ArsenalGroupHeader(title = stringResource(R.string.mounts_count, records.size)) {
                 MountPills(succeeded = records.size - failures, failed = failures)
             }
         }
@@ -173,16 +172,16 @@ internal fun MountPills(succeeded: Int, failed: Int) {
 
 @Composable
 private fun MountRow(record: MountRecord, shape: Shape, onClick: () -> Unit) {
-    Surface(onClick = onClick, shape = shape, color = CleanerSurfaces.row, modifier = Modifier.fillMaxWidth()) {
+    Surface(onClick = onClick, shape = shape, color = ArsenalTokens.colors.surfaceBright, modifier = Modifier.fillMaxWidth()) {
         Row(
             modifier = Modifier
                 .heightIn(min = 72.dp)
-                .padding(horizontal = Spacing.lg, vertical = Spacing.md),
+                .padding(horizontal = ArsenalTokens.spacing.lg, vertical = ArsenalTokens.spacing.md),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(Spacing.md),
+            horizontalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.md),
         ) {
             MountAppIcon(record)
-            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(Spacing.extraSmall)) {
+            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.xs)) {
                 Text(rememberAppLabel(record.packageName), style = MaterialTheme.typography.titleMedium, maxLines = 1)
                 Text(
                     text = if (record.success) {
@@ -215,7 +214,7 @@ private fun MountAppIcon(record: MountRecord) {
     Box {
         AppIcon(record.packageName, size = 40.dp)
         Surface(
-            modifier = Modifier.align(Alignment.BottomEnd).offset(x = Spacing.xs, y = Spacing.xs).size(18.dp),
+            modifier = Modifier.align(Alignment.BottomEnd).offset(x = ArsenalTokens.spacing.xs, y = ArsenalTokens.spacing.xs).size(18.dp),
             shape = CircleShape,
             color = if (record.success) scheme.primary else scheme.error,
             contentColor = if (record.success) scheme.onPrimary else scheme.onError,

@@ -24,7 +24,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import killua.dev.arsenal.core.di.ApplicationScope
 import killua.dev.arsenal.core.gate.Gate
 import killua.dev.arsenal.data.settings.SettingsStore
-import killua.dev.arsenal.material.Spacing
+import killua.dev.arsenal.material.ArsenalTokens
 import killua.dev.arsenal.material.templates.scaffolds.plus
 import killua.dev.arsenal.material.templates.settings.ArsenalSettingsScreen
 import killua.dev.arsenal.material.templates.settings.SettingsAccent
@@ -61,7 +61,7 @@ fun SettingsTab() {
         ArsenalSettingsScreen(
             screen = SCREEN,
             store = viewModel.store,
-            contentPadding = padding + PaddingValues(start = Spacing.md, end = Spacing.md, bottom = Spacing.lg),
+            contentPadding = padding + PaddingValues(start = ArsenalTokens.spacing.md, end = ArsenalTokens.spacing.md, bottom = ArsenalTokens.spacing.lg),
             itemContainerColor = CleanerSurfaces.row,
         )
     }

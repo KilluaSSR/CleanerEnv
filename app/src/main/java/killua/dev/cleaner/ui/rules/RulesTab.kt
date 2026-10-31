@@ -28,7 +28,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import killua.dev.arsenal.core.overlay.SimpleMenuItem
 import killua.dev.arsenal.core.overlay.SimpleMenuMode
 import killua.dev.arsenal.core.state.DataState
-import killua.dev.arsenal.material.Spacing
+import killua.dev.arsenal.material.ArsenalTokens
 import killua.dev.arsenal.material.components.application.AppFilterChip
 import killua.dev.arsenal.material.components.application.AppFilterChipsRow
 import killua.dev.arsenal.material.components.application.ArsenalSearchBar
@@ -133,8 +133,8 @@ private fun FilterMenu(filter: AppFilter, onIntent: (RulesIntent) -> Unit) {
 private fun AppList(apps: List<AppEntry>, onOpen: (String) -> Unit) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(start = Spacing.md, end = Spacing.md, bottom = Spacing.lg),
-        verticalArrangement = Arrangement.spacedBy(Spacing.xs),
+        contentPadding = PaddingValues(start = ArsenalTokens.spacing.md, end = ArsenalTokens.spacing.md, bottom = ArsenalTokens.spacing.lg),
+        verticalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.xs),
     ) {
         appListItems(
             items = apps,

@@ -50,7 +50,7 @@ import killua.dev.arsenal.core.mvvm.UiState
 import killua.dev.arsenal.core.overlay.OverlayController
 import killua.dev.arsenal.core.state.DataState
 import killua.dev.arsenal.data.settings.SettingsStore
-import killua.dev.arsenal.material.Spacing
+import killua.dev.arsenal.material.ArsenalTokens
 import killua.dev.arsenal.material.templates.scaffolds.plus
 import killua.dev.arsenal.material.templates.settings.SettingsAccent
 import killua.dev.arsenal.material.templates.settings.SettingsSwitch
@@ -154,8 +154,8 @@ fun FileMonitorScreen(backStackEntry: NavBackStackEntry) {
     ) { padding ->
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = padding + PaddingValues(start = Spacing.md, end = Spacing.md, top = Spacing.sm, bottom = Spacing.lg),
-            verticalArrangement = Arrangement.spacedBy(Spacing.xs),
+            contentPadding = padding + PaddingValues(start = ArsenalTokens.spacing.md, end = ArsenalTokens.spacing.md, top = ArsenalTokens.spacing.sm, bottom = ArsenalTokens.spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.xs),
         ) {
             item(key = "monitor") {
                 SettingsSwitch(
@@ -169,7 +169,7 @@ fun FileMonitorScreen(backStackEntry: NavBackStackEntry) {
                     containerColor = CleanerSurfaces.row,
                 )
             }
-            item(key = "gap") { Box(Modifier.padding(top = Spacing.md)) }
+            item(key = "gap") { Box(Modifier.padding(top = ArsenalTokens.spacing.md)) }
             when {
                 !state.daemonOnline -> stateItem { ServerRequiredView(it) }
                 apps is DataState.Success -> itemsIndexed(apps.data, key = { _, event -> event.packageName }) { index, event ->
@@ -207,12 +207,12 @@ private fun MonitoredAppRow(latest: FileEvent, shape: Shape, modifier: Modifier 
         Row(
             modifier = Modifier
                 .heightIn(min = 72.dp)
-                .padding(horizontal = Spacing.lg, vertical = Spacing.md),
+                .padding(horizontal = ArsenalTokens.spacing.lg, vertical = ArsenalTokens.spacing.md),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(Spacing.md),
+            horizontalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.md),
         ) {
             AppIcon(latest.packageName, size = 40.dp)
-            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(Spacing.extraSmall)) {
+            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.xs)) {
                 Text(rememberAppLabel(latest.packageName), style = MaterialTheme.typography.titleMedium, maxLines = 1)
                 Text(
                     text = stringResource(R.string.history_app_latest, stringResource(latest.type.labelRes()), latest.subPath),
@@ -306,19 +306,19 @@ fun FileHistoryScreen(backStackEntry: NavBackStackEntry) {
     ) { padding ->
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = padding + PaddingValues(start = Spacing.md, end = Spacing.md, bottom = Spacing.lg),
-            verticalArrangement = Arrangement.spacedBy(Spacing.xs),
+            contentPadding = padding + PaddingValues(start = ArsenalTokens.spacing.md, end = ArsenalTokens.spacing.md, bottom = ArsenalTokens.spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.xs),
         ) {
             item(key = "header") {
                 AppHeader(
                     packageName = state.packageName,
                     label = rememberAppLabel(state.packageName),
-                    modifier = Modifier.padding(bottom = Spacing.md),
+                    modifier = Modifier.padding(bottom = ArsenalTokens.spacing.md),
                 ) {
                     if (events is DataState.Success) {
                         Pill(
                             text = stringResource(R.string.history_record_count, events.data.size),
-                            modifier = Modifier.padding(top = Spacing.xs),
+                            modifier = Modifier.padding(top = ArsenalTokens.spacing.xs),
                         )
                     }
                 }
@@ -351,9 +351,9 @@ private fun EventRow(event: FileEvent, shape: Shape) {
         Row(
             modifier = Modifier
                 .heightIn(min = 64.dp)
-                .padding(horizontal = Spacing.lg, vertical = Spacing.sm),
+                .padding(horizontal = ArsenalTokens.spacing.lg, vertical = ArsenalTokens.spacing.sm),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(Spacing.md),
+            horizontalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.md),
         ) {
             Icon(event.type.icon(), contentDescription = null, tint = MaterialTheme.colorScheme.primary)
             Column(Modifier.weight(1f)) {

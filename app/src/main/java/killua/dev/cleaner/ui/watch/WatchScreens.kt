@@ -66,7 +66,7 @@ import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavBackStackEntry
 import killua.dev.arsenal.core.state.DataState
-import killua.dev.arsenal.material.Spacing
+import killua.dev.arsenal.material.ArsenalTokens
 import killua.dev.arsenal.material.templates.scaffolds.plus
 import killua.dev.arsenal.material.templates.settings.SettingsAccent
 import killua.dev.arsenal.material.templates.settings.SettingsItem
@@ -162,11 +162,11 @@ private fun WatchEditorContent(state: WatchEditorState, onIntent: (WatchEditorIn
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        contentPadding = padding + PaddingValues(start = Spacing.md, end = Spacing.md, top = Spacing.sm, bottom = Spacing.lg),
-        verticalArrangement = Arrangement.spacedBy(Spacing.lg),
+        contentPadding = padding + PaddingValues(start = ArsenalTokens.spacing.md, end = ArsenalTokens.spacing.md, top = ArsenalTokens.spacing.sm, bottom = ArsenalTokens.spacing.lg),
+        verticalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.lg),
     ) {
         item(key = "directory") {
-            Column(verticalArrangement = Arrangement.spacedBy(Spacing.sm)) {
+            Column(verticalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.sm)) {
                 GroupHeader(title = stringResource(R.string.watch_section_directory))
                 FolderField(
                     path = state.directory,
@@ -196,7 +196,7 @@ private fun WatchEditorContent(state: WatchEditorState, onIntent: (WatchEditorIn
                         label = stringResource(if (namedKind == WatchKind.Folder) R.string.watch_name_folder else R.string.watch_name_file),
                         supporting = stringResource(if (state.nameError) R.string.watch_name_invalid else R.string.watch_name_supporting),
                         isError = state.nameError,
-                        modifier = Modifier.padding(top = Spacing.md),
+                        modifier = Modifier.padding(top = ArsenalTokens.spacing.md),
                     )
                 }
             }
@@ -237,7 +237,7 @@ private fun WatchEditorContent(state: WatchEditorState, onIntent: (WatchEditorIn
                 text = stringResource(R.string.watch_attribution_note),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(horizontal = Spacing.sm),
+                modifier = Modifier.padding(horizontal = ArsenalTokens.spacing.sm),
             )
         }
         item(key = "save") {
@@ -346,8 +346,8 @@ fun WatchLogScreen(backStackEntry: NavBackStackEntry) {
         val events = (state.events as? DataState.Success)?.data.orEmpty()
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = padding + PaddingValues(start = Spacing.md, end = Spacing.md, top = Spacing.sm, bottom = Spacing.lg),
-            verticalArrangement = Arrangement.spacedBy(Spacing.xs),
+            contentPadding = padding + PaddingValues(start = ArsenalTokens.spacing.md, end = ArsenalTokens.spacing.md, top = ArsenalTokens.spacing.sm, bottom = ArsenalTokens.spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.xs),
         ) {
             item(key = "enabled") {
                 SettingsSwitch(
@@ -373,7 +373,7 @@ fun WatchLogScreen(backStackEntry: NavBackStackEntry) {
                     )
                 }
             }
-            item(key = "gap") { Box(Modifier.padding(top = Spacing.md)) }
+            item(key = "gap") { Box(Modifier.padding(top = ArsenalTokens.spacing.md)) }
             when {
                 !state.daemonOnline -> item(key = "offline") { ServerRequiredView() }
                 state.events is DataState.Loading -> item(key = "loading") { LoadingView() }
@@ -398,9 +398,9 @@ private fun EventRow(event: WatchHit, shape: Shape) {
         Row(
             modifier = Modifier
                 .heightIn(min = 64.dp)
-                .padding(horizontal = Spacing.lg, vertical = Spacing.sm),
+                .padding(horizontal = ArsenalTokens.spacing.lg, vertical = ArsenalTokens.spacing.sm),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(Spacing.md),
+            horizontalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.md),
         ) {
             Icon(event.type.icon(), contentDescription = null, tint = MaterialTheme.colorScheme.primary)
             Column(Modifier.weight(1f)) {
@@ -457,8 +457,8 @@ fun WatchRulesScreen(backStackEntry: NavBackStackEntry) {
         }
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = padding + PaddingValues(start = Spacing.md, end = Spacing.md, top = Spacing.sm, bottom = FAB_CLEARANCE),
-            verticalArrangement = Arrangement.spacedBy(Spacing.xs),
+            contentPadding = padding + PaddingValues(start = ArsenalTokens.spacing.md, end = ArsenalTokens.spacing.md, top = ArsenalTokens.spacing.sm, bottom = FAB_CLEARANCE),
+            verticalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.xs),
         ) {
             itemsIndexed(state.rules, key = { _, rule -> rule.id }) { index, rule ->
                 ManagedRuleRow(

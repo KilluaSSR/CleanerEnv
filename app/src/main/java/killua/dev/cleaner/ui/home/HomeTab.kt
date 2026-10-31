@@ -61,7 +61,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import killua.dev.arsenal.material.Spacing
+import killua.dev.arsenal.material.ArsenalTokens
 import killua.dev.arsenal.material.components.loadingindicator.ArsenalLoadingIndicator
 import killua.dev.arsenal.material.templates.scaffolds.plus
 import killua.dev.arsenal.material.templates.settings.SettingsAccent
@@ -145,7 +145,7 @@ private fun UpdatePill(
                 exit = fadeOut() + shrinkHorizontally(),
             ) {
                 ArsenalLoadingIndicator(
-                    modifier = Modifier.padding(end = Spacing.xs).size(16.dp),
+                    modifier = Modifier.padding(end = ArsenalTokens.spacing.xs).size(16.dp),
                     color = content,
                 )
             }
@@ -159,12 +159,12 @@ private fun HomeContent(state: HomeState, onIntent: (HomeIntent) -> Unit, conten
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = contentPadding + PaddingValues(
-            start = Spacing.md,
-            end = Spacing.md,
-            top = Spacing.sm,
-            bottom = Spacing.lg,
+            start = ArsenalTokens.spacing.md,
+            end = ArsenalTokens.spacing.md,
+            top = ArsenalTokens.spacing.sm,
+            bottom = ArsenalTokens.spacing.lg,
         ),
-        verticalArrangement = Arrangement.spacedBy(Spacing.sm),
+        verticalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.sm),
     ) {
         item(key = "status") { StatusCard(state.status, state.busy, onIntent) }
         item(key = "service") { ServiceGroup(state.runtime, state.busy, onIntent) }
@@ -208,10 +208,10 @@ private fun StatusCard(status: ModuleStatus, busy: Boolean, onIntent: (HomeInten
         contentColor = content,
     ) {
         Column(
-            modifier = Modifier.padding(Spacing.lg),
-            verticalArrangement = Arrangement.spacedBy(Spacing.sm),
+            modifier = Modifier.padding(ArsenalTokens.spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.sm),
         ) {
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Spacing.md)) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.md)) {
                 Crossfade(targetState = status == ModuleStatus.Checking || busy, label = "statusBusy") { loading ->
                     Box(Modifier.size(40.dp), contentAlignment = Alignment.Center) {
                         if (loading) {
@@ -328,8 +328,8 @@ private fun StatusActions(status: ModuleStatus, busy: Boolean, onIntent: (HomeIn
     }
     AnimatedVisibility(visible = actions.isNotEmpty()) {
         FlowRow(
-            modifier = Modifier.padding(top = Spacing.sm),
-            horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
+            modifier = Modifier.padding(top = ArsenalTokens.spacing.sm),
+            horizontalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.sm),
         ) {
             actions.forEachIndexed { index, (label, intent) ->
                 if (index == 0) {

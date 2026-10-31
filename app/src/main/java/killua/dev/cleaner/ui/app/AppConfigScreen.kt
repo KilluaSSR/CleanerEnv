@@ -53,7 +53,7 @@ import androidx.navigation.NavBackStackEntry
 import killua.dev.arsenal.core.mvvm.CollectEffect
 import killua.dev.arsenal.core.overlay.SimpleMenuItem
 import killua.dev.arsenal.core.overlay.SimpleMenuMode
-import killua.dev.arsenal.material.Spacing
+import killua.dev.arsenal.material.ArsenalTokens
 import killua.dev.arsenal.material.components.Highlight
 import killua.dev.arsenal.material.components.HighlightTone
 import killua.dev.arsenal.material.components.menu.rememberSimpleMenuLauncher
@@ -102,8 +102,8 @@ fun AppConfigScreen(backStackEntry: NavBackStackEntry) {
         LazyColumn(
             state = listState,
             modifier = Modifier.fillMaxSize(),
-            contentPadding = padding + PaddingValues(start = Spacing.md, end = Spacing.md, bottom = FAB_CLEARANCE),
-            verticalArrangement = Arrangement.spacedBy(Spacing.md),
+            contentPadding = padding + PaddingValues(start = ArsenalTokens.spacing.md, end = ArsenalTokens.spacing.md, bottom = FAB_CLEARANCE),
+            verticalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.md),
         ) {
             item(key = "header") { ConfigHeader(state.app, state.packageName) }
             item(key = "enable") {
@@ -169,7 +169,7 @@ private fun ConfigHeader(app: AppEntry?, packageName: String) {
             )
             Pill(
                 text = stringResource(R.string.config_api_badge, app.targetSdk, stringResource(app.storageAccess.labelRes())),
-                modifier = Modifier.padding(top = Spacing.xs),
+                modifier = Modifier.padding(top = ArsenalTokens.spacing.xs),
             )
         }
     }

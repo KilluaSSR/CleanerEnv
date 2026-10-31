@@ -40,7 +40,7 @@ import killua.dev.arsenal.core.mvvm.UiEffect
 import killua.dev.arsenal.core.mvvm.UiIntent
 import killua.dev.arsenal.core.mvvm.UiState
 import killua.dev.arsenal.core.state.DataState
-import killua.dev.arsenal.material.Spacing
+import killua.dev.arsenal.material.ArsenalTokens
 import killua.dev.arsenal.material.templates.scaffolds.plus
 import killua.dev.arsenal.material.templates.settings.groupedItemShape
 import killua.dev.arsenal.material.templates.settings.itemPosition
@@ -141,8 +141,8 @@ private fun MountList(records: List<MountRecord>, padding: PaddingValues, onOpen
     val failures = records.count { !it.success }
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        contentPadding = padding + PaddingValues(start = Spacing.md, end = Spacing.md, bottom = Spacing.lg),
-        verticalArrangement = Arrangement.spacedBy(Spacing.xs),
+        contentPadding = padding + PaddingValues(start = ArsenalTokens.spacing.md, end = ArsenalTokens.spacing.md, bottom = ArsenalTokens.spacing.lg),
+        verticalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.xs),
     ) {
         item(key = "summary") {
             GroupHeader(title = stringResource(R.string.mounts_count, records.size)) {
@@ -177,12 +177,12 @@ private fun MountRow(record: MountRecord, shape: Shape, onClick: () -> Unit) {
         Row(
             modifier = Modifier
                 .heightIn(min = 72.dp)
-                .padding(horizontal = Spacing.lg, vertical = Spacing.md),
+                .padding(horizontal = ArsenalTokens.spacing.lg, vertical = ArsenalTokens.spacing.md),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(Spacing.md),
+            horizontalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.md),
         ) {
             MountAppIcon(record)
-            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(Spacing.extraSmall)) {
+            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.xs)) {
                 Text(rememberAppLabel(record.packageName), style = MaterialTheme.typography.titleMedium, maxLines = 1)
                 Text(
                     text = if (record.success) {
@@ -215,7 +215,7 @@ private fun MountAppIcon(record: MountRecord) {
     Box {
         AppIcon(record.packageName, size = 40.dp)
         Surface(
-            modifier = Modifier.align(Alignment.BottomEnd).offset(x = Spacing.xs, y = Spacing.xs).size(18.dp),
+            modifier = Modifier.align(Alignment.BottomEnd).offset(x = ArsenalTokens.spacing.xs, y = ArsenalTokens.spacing.xs).size(18.dp),
             shape = CircleShape,
             color = if (record.success) scheme.primary else scheme.error,
             contentColor = if (record.success) scheme.onPrimary else scheme.onError,

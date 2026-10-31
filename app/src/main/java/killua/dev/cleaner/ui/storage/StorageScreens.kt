@@ -45,7 +45,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavBackStackEntry
 import killua.dev.arsenal.core.state.DataState
-import killua.dev.arsenal.material.Spacing
+import killua.dev.arsenal.material.ArsenalTokens
 import killua.dev.arsenal.material.components.loadingindicator.ArsenalLinearWavyProgressIndicator
 import killua.dev.arsenal.material.templates.scaffolds.plus
 import killua.dev.arsenal.material.templates.settings.groupedItemShape
@@ -106,7 +106,7 @@ fun IsolatedBrowserScreen(backStackEntry: NavBackStackEntry) {
         onBack = { viewModel.dispatch(StorageIntent.Up) },
     ) { padding ->
         StorageBody(state, padding, Icons.Rounded.FolderOff, stringResource(R.string.browser_empty)) { entries ->
-            FileList(entries, padding + PaddingValues(Spacing.md)) { viewModel.dispatch(StorageIntent.Enter(it)) }
+            FileList(entries, padding + PaddingValues(ArsenalTokens.spacing.md)) { viewModel.dispatch(StorageIntent.Enter(it)) }
         }
     }
 }
@@ -116,7 +116,7 @@ private fun FileList(entries: List<FileEntry>, contentPadding: PaddingValues, on
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = contentPadding,
-        verticalArrangement = Arrangement.spacedBy(Spacing.xs),
+        verticalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.xs),
     ) {
         itemsIndexed(entries, key = { _, entry -> entry.subPath }) { index, entry ->
             Surface(
@@ -128,9 +128,9 @@ private fun FileList(entries: List<FileEntry>, contentPadding: PaddingValues, on
                         .fillMaxWidth()
                         .clickable(enabled = entry.isDirectory) { onOpen(entry) }
                         .heightIn(min = 64.dp)
-                        .padding(horizontal = Spacing.lg, vertical = Spacing.sm),
+                        .padding(horizontal = ArsenalTokens.spacing.lg, vertical = ArsenalTokens.spacing.sm),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(Spacing.md),
+                    horizontalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.md),
                 ) {
                     Icon(
                         imageVector = if (entry.isDirectory) Icons.Rounded.Folder else Icons.AutoMirrored.Rounded.InsertDriveFile,
@@ -175,9 +175,9 @@ fun GalleryScreen(backStackEntry: NavBackStackEntry) {
                 LazyVerticalGrid(
                     columns = GridCells.Adaptive(minSize = 112.dp),
                     modifier = Modifier.fillMaxSize(),
-                    contentPadding = padding + PaddingValues(Spacing.sm),
-                    horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
-                    verticalArrangement = Arrangement.spacedBy(Spacing.xs),
+                    contentPadding = padding + PaddingValues(ArsenalTokens.spacing.sm),
+                    horizontalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.xs),
+                    verticalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.xs),
                 ) {
                     items(media, key = { it.subPath }) { entry -> Thumbnail(entry, viewModel) }
                 }
@@ -215,16 +215,16 @@ fun FolderAnalysisScreen(backStackEntry: NavBackStackEntry) {
     AppDetailScaffold(onBack = { viewModel.dispatch(StorageIntent.Back) }) { padding ->
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = padding + PaddingValues(start = Spacing.md, end = Spacing.md, bottom = Spacing.lg),
-            verticalArrangement = Arrangement.spacedBy(Spacing.xs),
+            contentPadding = padding + PaddingValues(start = ArsenalTokens.spacing.md, end = ArsenalTokens.spacing.md, bottom = ArsenalTokens.spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.xs),
         ) {
             item(key = "header") {
                 AppHeader(
                     packageName = state.packageName,
                     label = rememberAppLabel(state.packageName),
-                    modifier = Modifier.padding(bottom = Spacing.md),
+                    modifier = Modifier.padding(bottom = ArsenalTokens.spacing.md),
                 ) {
-                    Pill(text = stringResource(R.string.analysis_title), modifier = Modifier.padding(top = Spacing.xs))
+                    Pill(text = stringResource(R.string.analysis_title), modifier = Modifier.padding(top = ArsenalTokens.spacing.xs))
                     if (entries is DataState.Success) {
                         Text(
                             text = stringResource(R.string.analysis_total, rememberFormattedSize(state.totalSize)),
@@ -250,8 +250,8 @@ fun FolderAnalysisScreen(backStackEntry: NavBackStackEntry) {
 private fun AnalysisRow(entry: FileEntry, total: Long, shape: Shape) {
     Surface(shape = shape, color = CleanerSurfaces.row) {
         Column(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = Spacing.lg, vertical = Spacing.md),
-            verticalArrangement = Arrangement.spacedBy(Spacing.sm),
+            modifier = Modifier.fillMaxWidth().padding(horizontal = ArsenalTokens.spacing.lg, vertical = ArsenalTokens.spacing.md),
+            verticalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.sm),
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(entry.name, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))

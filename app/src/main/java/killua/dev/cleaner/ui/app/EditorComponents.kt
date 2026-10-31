@@ -33,7 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import killua.dev.arsenal.material.Spacing
+import killua.dev.arsenal.material.ArsenalTokens
 import killua.dev.arsenal.material.templates.scaffolds.plus
 import killua.dev.arsenal.material.templates.settings.groupedItemShape
 import killua.dev.arsenal.material.templates.settings.itemPosition
@@ -74,12 +74,12 @@ fun RuleListEditor(
     ) { padding ->
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = padding + PaddingValues(start = Spacing.md, end = Spacing.md, bottom = 96.dp),
-            verticalArrangement = Arrangement.spacedBy(Spacing.xs),
+            contentPadding = padding + PaddingValues(start = ArsenalTokens.spacing.md, end = ArsenalTokens.spacing.md, bottom = 96.dp),
+            verticalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.xs),
         ) {
             item(key = "header") {
-                AppHeader(packageName = packageName, label = label, modifier = Modifier.padding(bottom = Spacing.sm)) {
-                    Pill(text = title, modifier = Modifier.padding(top = Spacing.xs))
+                AppHeader(packageName = packageName, label = label, modifier = Modifier.padding(bottom = ArsenalTokens.spacing.sm)) {
+                    Pill(text = title, modifier = Modifier.padding(top = ArsenalTokens.spacing.xs))
                 }
             }
             item(key = "description") {
@@ -87,7 +87,7 @@ fun RuleListEditor(
                     text = description,
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(horizontal = Spacing.sm, vertical = Spacing.sm),
+                    modifier = Modifier.padding(horizontal = ArsenalTokens.spacing.sm, vertical = ArsenalTokens.spacing.sm),
                 )
             }
             header()
@@ -111,9 +111,9 @@ fun RuleListEditor(
                         modifier = Modifier
                             .fillMaxWidth()
                             .heightIn(min = 64.dp)
-                            .padding(start = Spacing.lg, end = Spacing.sm, top = Spacing.sm, bottom = Spacing.sm),
+                            .padding(start = ArsenalTokens.spacing.lg, end = ArsenalTokens.spacing.sm, top = ArsenalTokens.spacing.sm, bottom = ArsenalTokens.spacing.sm),
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(Spacing.md),
+                        horizontalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.md),
                     ) {
                         Icon(itemIcon, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
                         Column(Modifier.weight(1f)) {
@@ -146,13 +146,13 @@ fun AddEntrySheet(
             modifier = Modifier
                 .navigationBarsPadding()
                 .imePadding()
-                .padding(horizontal = Spacing.lg)
-                .padding(bottom = Spacing.md),
-            verticalArrangement = Arrangement.spacedBy(Spacing.md),
+                .padding(horizontal = ArsenalTokens.spacing.lg)
+                .padding(bottom = ArsenalTokens.spacing.md),
+            verticalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.md),
         ) {
             Text(title, style = MaterialTheme.typography.titleLarge)
             content()
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Spacing.sm, Alignment.End)) {
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.sm, Alignment.End)) {
                 TextButton(onClick = onDismiss) { Text(stringResource(R.string.action_cancel)) }
                 Button(onClick = onConfirm, enabled = confirmEnabled) { Text(stringResource(R.string.action_add)) }
             }

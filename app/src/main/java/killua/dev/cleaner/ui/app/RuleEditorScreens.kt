@@ -22,7 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavBackStackEntry
-import killua.dev.arsenal.material.Spacing
+import killua.dev.arsenal.material.ArsenalTokens
 import killua.dev.arsenal.material.templates.settings.ItemPosition
 import killua.dev.arsenal.material.templates.settings.SettingsAccent
 import killua.dev.arsenal.material.templates.settings.SettingsSwitch
@@ -90,7 +90,7 @@ fun AccessibleFoldersScreen(backStackEntry: NavBackStackEntry) {
                     onCheckedChange = { viewModel.dispatch(AppRuleIntent.SetAllowGallery(it)) },
                     shape = groupedItemShape(ItemPosition.Single),
                     containerColor = CleanerSurfaces.row,
-                    modifier = Modifier.padding(bottom = Spacing.md),
+                    modifier = Modifier.padding(bottom = ArsenalTokens.spacing.md),
                 )
             }
         },
@@ -180,7 +180,7 @@ fun SharedFoldersScreen(backStackEntry: NavBackStackEntry) {
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun SourceAppChips(state: AppRuleState, selected: String?, onSelect: (String) -> Unit) {
-    FlowRow(horizontalArrangement = Arrangement.spacedBy(Spacing.sm)) {
+    FlowRow(horizontalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.sm)) {
         state.isolatedApps.forEach { app ->
             FilterChip(
                 selected = selected == app.packageName,

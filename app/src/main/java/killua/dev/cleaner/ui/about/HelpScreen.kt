@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
-import killua.dev.arsenal.material.Spacing
+import killua.dev.arsenal.material.ArsenalTokens
 import killua.dev.arsenal.material.templates.scaffolds.plus
 import killua.dev.arsenal.navigation.annotation.NavDestination
 import killua.dev.cleaner.R
@@ -38,14 +38,14 @@ fun HelpScreen(navController: NavHostController, backStackEntry: NavBackStackEnt
     DetailScaffold(title = stringResource(R.string.help_title), onBack = { navController.navigateUp() }) { padding ->
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = padding + PaddingValues(start = Spacing.md, end = Spacing.md, bottom = Spacing.lg),
-            verticalArrangement = Arrangement.spacedBy(Spacing.sm),
+            contentPadding = padding + PaddingValues(start = ArsenalTokens.spacing.md, end = ArsenalTokens.spacing.md, bottom = ArsenalTokens.spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.sm),
         ) {
             items(sections) { (title, body) ->
                 Surface(shape = MaterialTheme.shapes.large, color = CleanerSurfaces.row) {
                     Column(
-                        modifier = Modifier.fillMaxWidth().padding(Spacing.lg),
-                        verticalArrangement = Arrangement.spacedBy(Spacing.sm),
+                        modifier = Modifier.fillMaxWidth().padding(ArsenalTokens.spacing.lg),
+                        verticalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.sm),
                     ) {
                         Text(stringResource(title), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
                         Text(stringResource(body), style = MaterialTheme.typography.bodyMedium)

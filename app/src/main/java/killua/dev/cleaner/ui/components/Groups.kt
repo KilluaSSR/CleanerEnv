@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.font.FontWeight
-import killua.dev.arsenal.material.Spacing
+import killua.dev.arsenal.material.ArsenalTokens
 import killua.dev.arsenal.material.templates.settings.SettingsGroup
 import killua.dev.arsenal.material.templates.settings.groupedItemShape
 import killua.dev.arsenal.material.templates.settings.itemPosition
@@ -32,9 +32,9 @@ fun GroupHeader(
     trailing: @Composable RowScope.() -> Unit = {},
 ) {
     Row(
-        modifier = modifier.fillMaxWidth().padding(Spacing.sm),
+        modifier = modifier.fillMaxWidth().padding(ArsenalTokens.spacing.sm),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
+        horizontalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.sm),
     ) {
         Text(
             text = title,
@@ -60,7 +60,7 @@ fun RowGroup(
     if (rows.isEmpty()) return
     val color = CleanerSurfaces.row
     SettingsGroup(title = title, modifier = modifier) {
-        Column(verticalArrangement = Arrangement.spacedBy(Spacing.xs)) {
+        Column(verticalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.xs)) {
             rows.forEachIndexed { index, row ->
                 row(RowSlot(groupedItemShape(itemPosition(index, rows.size)), color))
             }

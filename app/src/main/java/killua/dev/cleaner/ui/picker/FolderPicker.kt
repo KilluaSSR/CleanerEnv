@@ -63,7 +63,7 @@ import killua.dev.arsenal.core.mvvm.UiEffect
 import killua.dev.arsenal.core.mvvm.UiIntent
 import killua.dev.arsenal.core.mvvm.UiState
 import killua.dev.arsenal.core.state.DataState
-import killua.dev.arsenal.material.Spacing
+import killua.dev.arsenal.material.ArsenalTokens
 import killua.dev.arsenal.material.templates.settings.groupedItemShape
 import killua.dev.arsenal.material.templates.settings.itemPosition
 import killua.dev.arsenal.permission.rememberAllFilesAccessState
@@ -164,9 +164,9 @@ fun FolderPickerSheet(
             modifier = Modifier
                 .navigationBarsPadding()
                 .imePadding()
-                .padding(horizontal = Spacing.lg)
-                .padding(bottom = Spacing.md),
-            verticalArrangement = Arrangement.spacedBy(Spacing.md),
+                .padding(horizontal = ArsenalTokens.spacing.lg)
+                .padding(bottom = ArsenalTokens.spacing.md),
+            verticalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.md),
         ) {
             Text(title, style = MaterialTheme.typography.titleLarge)
             if (granted) {
@@ -195,7 +195,7 @@ fun FolderPickerSheet(
                 )
             }
             val picked = if (allowManualPath) normalized else state.path.takeIf { granted && it.isNotEmpty() }
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Spacing.sm, Alignment.End)) {
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.sm, Alignment.End)) {
                 TextButton(onClick = onDismiss) { Text(stringResource(R.string.action_cancel)) }
                 Button(onClick = { picked?.let(onPick) }, enabled = picked != null) {
                     Text(stringResource(R.string.picker_confirm))
@@ -232,7 +232,7 @@ private fun FolderList(state: FolderPickerState, onIntent: (FolderPickerIntent) 
     when {
         !state.online -> ServerRequiredView()
         state.folders is DataState.Loading -> LoadingView()
-        else -> LazyColumn(verticalArrangement = Arrangement.spacedBy(Spacing.xs)) {
+        else -> LazyColumn(verticalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.xs)) {
             val count = folders.size + if (hasUp) 1 else 0
             if (hasUp) {
                 item(key = "up") {
@@ -269,9 +269,9 @@ private fun FolderList(state: FolderPickerState, onIntent: (FolderPickerIntent) 
 private fun FolderRow(icon: ImageVector, name: String, shape: Shape, chevron: Boolean, onClick: () -> Unit) {
     Surface(onClick = onClick, shape = shape, color = CleanerSurfaces.row, modifier = Modifier.fillMaxWidth()) {
         Row(
-            modifier = Modifier.heightIn(min = 56.dp).padding(horizontal = Spacing.lg),
+            modifier = Modifier.heightIn(min = 56.dp).padding(horizontal = ArsenalTokens.spacing.lg),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(Spacing.md),
+            horizontalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.md),
         ) {
             Icon(icon, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
             Text(name, style = MaterialTheme.typography.bodyLarge, maxLines = 1, modifier = Modifier.weight(1f))
@@ -345,12 +345,12 @@ fun FolderField(
         ) { picked ->
             if (picked == null) {
                 Column(
-                    modifier = Modifier.fillMaxWidth().padding(vertical = Spacing.xl),
+                    modifier = Modifier.fillMaxWidth().padding(vertical = ArsenalTokens.spacing.xl),
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(Spacing.sm),
+                    verticalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.sm),
                 ) {
                     Surface(shape = CircleShape, color = scheme.primaryContainer, contentColor = scheme.onPrimaryContainer) {
-                        Icon(Icons.Rounded.Add, contentDescription = null, modifier = Modifier.padding(Spacing.md).size(32.dp))
+                        Icon(Icons.Rounded.Add, contentDescription = null, modifier = Modifier.padding(ArsenalTokens.spacing.md).size(32.dp))
                     }
                     Text(title, style = MaterialTheme.typography.titleMedium)
                     if (supporting != null) {
@@ -358,15 +358,15 @@ fun FolderField(
                             text = supporting,
                             style = MaterialTheme.typography.bodySmall,
                             color = if (isError) scheme.error else scheme.onSurfaceVariant,
-                            modifier = Modifier.padding(horizontal = Spacing.lg),
+                            modifier = Modifier.padding(horizontal = ArsenalTokens.spacing.lg),
                         )
                     }
                 }
             } else {
                 Row(
-                    modifier = Modifier.fillMaxWidth().heightIn(min = 72.dp).padding(horizontal = Spacing.lg, vertical = Spacing.md),
+                    modifier = Modifier.fillMaxWidth().heightIn(min = 72.dp).padding(horizontal = ArsenalTokens.spacing.lg, vertical = ArsenalTokens.spacing.md),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(Spacing.md),
+                    horizontalArrangement = Arrangement.spacedBy(ArsenalTokens.spacing.md),
                 ) {
                     Icon(Icons.Rounded.FolderOpen, contentDescription = null, tint = scheme.primary)
                     Text(source.pathText(picked), style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))

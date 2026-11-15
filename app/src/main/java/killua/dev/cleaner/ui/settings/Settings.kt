@@ -15,6 +15,7 @@ import androidx.compose.material.icons.rounded.PowerSettingsNew
 import androidx.compose.material.icons.rounded.SdStorage
 import androidx.compose.material.icons.rounded.StopCircle
 import androidx.compose.material.icons.rounded.Wallpaper
+import androidx.compose.material.icons.rounded.Terminal
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -232,5 +233,22 @@ class SourcecodeSettingEntry @Inject constructor(
         icon = Icons.Default.Code,
         accent = SettingsAccent.Tertiary,
         onClick = { openUrl(context, GITHUB_REPO_URL) },
+    )
+}
+
+@SpiImpl
+class LogsSettingEntry @Inject constructor(
+    @ApplicationContext private val context: Context,
+    private val navigator: Navigator,
+) : SettingsEntry {
+    override val screen = SCREEN
+    override val group: String = context.getString(R.string.settings_group_debug)
+    override val order = 100
+    override fun model() = SettingsItemModel.Navigation(
+        title = context.getString(R.string.settings_logs_title),
+        description = context.getString(R.string.settings_logs_description),
+        icon = Icons.Rounded.Terminal,
+        accent = SettingsAccent.Neutral,
+        onClick = { navigator.navigate(GeneratedRoutes.LOGS_SCREEN) },
     )
 }
